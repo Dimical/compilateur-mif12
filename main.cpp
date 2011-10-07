@@ -1,11 +1,13 @@
 #include <cstdio>
 #include <iostream>
+#include "parser.hpp"
+
 
 using namespace std;
 
 int main (){
 
-  cout << "coucou" << endl;
+	yyparse();
 
   return 0;
 

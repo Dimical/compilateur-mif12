@@ -13,7 +13,7 @@ parser.o: parser.cpp
 parser.cpp: parser.y
 	bison -d -o parser.cpp parser.y
 
-main.o: main.cpp
+main.o: main.cpp parser.hpp
 	g++ -o main.o -c main.cpp
 
 clean:
