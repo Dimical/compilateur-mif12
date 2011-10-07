@@ -1,17 +1,20 @@
-prog: lexer.o parser.o
-	gcc -o compil parser.o lexer.o -lfl
+prog: lexer.o parser.o main.o
+	g++ -o prog parser.o lexer.o main.o -lfl
 
-exem.o: lexer.c
-	gcc -o lexer.o -c lexer.c
+lexer.o: lexer.cpp
+	g++ -o lexer.o -c lexer.cpp
 
-exem.c: lexer.l parser.c
-	flex -o lexer.c lexer.l
+lexer.cpp: lexer.l parser.cpp
+	flex -o lexer.cpp lexer.l
 
-exemple.o: parser.c
-	gcc -o parser.o -c parser.c
+parser.o: parser.cpp
+	g++ -o parser.o -c parser.cpp
 
-exemple.c: parser.y
-	bison -d -o parser.c parser.y
+parser.cpp: parser.y
+	bison -d -o parser.cpp parser.y
+
+main.o: main.cpp
+	g++ -o main.o -c main.cpp
 
 clean:
-	rm *.o *.c *.h compil
+	rm *.o  *.h prog
