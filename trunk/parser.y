@@ -2,6 +2,7 @@
 
 #include <cstddef>
 
+extern int yyparse();
 extern int yyerror ( char* );
 extern int yylex ();
 
@@ -330,3 +331,7 @@ ListParameters			:	ListParameters SEP_COMMA Expression
 				;
 
 %%
+int main ( int argc, char** argv )
+{
+        yyparse ();
+}
