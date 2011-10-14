@@ -1,3 +1,5 @@
+A_SUPR = *.o prog parser.cpp parser.hpp lexer.cpp
+
 prog: lexer.o parser.o TableId.o
 	g++ -o prog parser.o lexer.o TableId.o -lfl
 
@@ -17,4 +19,5 @@ TableId.o: TableId.cpp
 	g++ -o TableId.o -c TableId.cpp
 
 clean:
-	rm *.o   prog parser.hpp parser.cpp lexer.cpp
+	rm $(A_SUPR)
+
