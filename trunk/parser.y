@@ -1,6 +1,13 @@
 %{
 
 #include <cstddef>
+#include <cstdio>
+#include <iostream>
+#include "TableId.hpp"
+
+extern FILE* yyin;
+
+extern TableId *tableid;
 
 extern int yyparse();
 extern int yyerror ( char* );
@@ -331,7 +338,12 @@ ListParameters			:	ListParameters SEP_COMMA Expression
 				;
 
 %%
+using namespace std;
 int main ( int argc, char** argv )
 {
-        yyparse ();
+	yyin = fopen ( argv [ 1 ], "r" );
+	tableid=new TableId();
+	yyparse ();
+	tableid->Affichage();
+	fclose ( yyin );
 }

@@ -15,6 +15,7 @@
             </sourceRootList>
             <confList>
                 <confElem>Default</confElem>
+                <confElem>Exemple</confElem>
             </confList>
         </data>
     </configuration>
