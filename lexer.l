@@ -10,12 +10,19 @@
 #include <cmath>
 
 #include "parser.hpp"
+#include "TableId.hpp"
 
 extern int row, column;
+
+TableId* tableid;
+
+int numid;
 
 extern int yyerror ( char* m );
 
 extern int yylex ();
+
+extern int yyparse();
 
 extern void commenteof ();
 
@@ -118,7 +125,7 @@ CHIFFRES [0-9]+
 
 {T}{R}{U}{E}					column += yyleng; return TOK_BOOLEAN;
 {F}{A}{L}{S}{E}					column += yyleng; return TOK_BOOLEAN;
-[a-zA-Z]([a-zA-Z0-9])+				column += yyleng; return TOK_IDENT;
+[a-zA-Z]([a-zA-Z0-9])+				column += yyleng; numid = tableid->Ajout(yytext); return TOK_IDENT;
 '({NQUOTE}|'')+'					column += yyleng; return TOK_STRING;
 {CHIFFRES}						column += yyleng; return TOK_INTEGER;
 {CHIFFRES}"."{CHIFFRES}			column += yyleng; return TOK_REAL;
