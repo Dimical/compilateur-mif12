@@ -9,14 +9,13 @@
 #define	SYMBOLE_HPP
 
 #include "TableId.hpp"
-
+#include "Type.hpp"
 
 class Symbole{
 
 private:
-    int identif; // notre numéro de la classe TableID
-
-
+    Type T;
+    
 public:
     Symbole();
     Symbole(const Symbole& orig);
