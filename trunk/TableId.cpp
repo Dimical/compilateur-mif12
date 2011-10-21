@@ -11,8 +11,8 @@ using namespace std;
 
 TableId::TableId(void)
 {
-    this->Champ.insert( std::map<int, std::string>::value_type(0, "a"));
-    this->Champ.insert( std::map<int, std::string>::value_type(1, "b"));
+   // this->Champ.insert( std::map<int, std::string>::value_type(0, "a"));
+    //this->Champ.insert( std::map<int, std::string>::value_type(1, "b"));
 }
 int TableId::Ajout(std::string id)
 {

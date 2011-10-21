@@ -1,8 +1,8 @@
 /* 
  * File:   Type.cpp
- * Author: p0700785
+ * Author: bilal
  * 
- * Created on 14 octobre 2011, 10:37
+ * Created on 21 octobre 2011, 16:29
  */
 
 #include "Type.hpp"
