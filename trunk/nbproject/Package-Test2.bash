@@ -7,12 +7,12 @@
 # Macros
 TOP=`pwd`
 CND_PLATFORM=GNU-Linux-x86
-CND_CONF=Exemple
+CND_CONF=Test2
 CND_DISTDIR=dist
 NBTMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=./prog
-OUTPUT_BASENAME=prog
+OUTPUT_PATH=MissingOutputInProject
+OUTPUT_BASENAME=MissingOutputInProject
 PACKAGE_TOP_DIR=compilateur-mif12/
 
 # Functions

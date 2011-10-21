@@ -16,6 +16,18 @@
             <confList>
                 <confElem>Default</confElem>
                 <confElem>Exemple</confElem>
+                <confElem>Test1</confElem>
+                <confElem>Test2</confElem>
+                <confElem>Test3</confElem>
+                <confElem>Test4</confElem>
+                <confElem>Test5</confElem>
+                <confElem>Test6</confElem>
+                <confElem>Test7</confElem>
+                <confElem>Test8</confElem>
+                <confElem>Test9</confElem>
+                <confElem>Test10</confElem>
+                <confElem>Test11</confElem>
+                <confElem>Test12</confElem>
             </confList>
         </data>
     </configuration>
