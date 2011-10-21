@@ -8,5 +8,5 @@ pointeur:^integer;
 
 
 begin
-   
+
 end.
