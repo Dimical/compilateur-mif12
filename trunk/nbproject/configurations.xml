@@ -24,12 +24,34 @@
       </df>
       <df name="headers">
         <in>Symbole.hpp</in>
+        <in>SymboleCst.hpp</in>
+        <in>SymboleVar.hpp</in>
         <in>TableId.hpp</in>
         <in>TableSymb.hpp</in>
         <in>Type.hpp</in>
         <in>TypeBase.hpp</in>
       </df>
+      <df name="include">
+      </df>
       <df name="objets">
+        <df name=".svn">
+          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
+            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+          </df>
+          <in>all-wcprops</in>
+          <in>entries</in>
+        </df>
       </df>
       <df name="sources">
         <df name=".svn">
@@ -65,14 +87,34 @@
         <in>TableId.cpp</in>
         <in>TableSymb.cpp</in>
         <in>Type.cpp</in>
-        <in>TypeBase.cpp</in>
-        <in>lexer.cpp</in>
-        <in>main.cpp</in>
-        <in>parser.cpp</in>
         <in>parser.hpp</in>
       </df>
+      <df name="temp">
+        <df name=".svn">
+          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            <in>SymboleCst.cpp.svn-base</in>
+            <in>SymboleVar.cpp.svn-base</in>
+            <in>TypeBase.cpp.svn-base</in>
+          </df>
+          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
+            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+          </df>
+          <in>entries</in>
+        </df>
+        <in>SymboleCst.cpp</in>
+        <in>SymboleVar.cpp</in>
+        <in>TypeBase.cpp</in>
+      </df>
       <in>Code3ad.hpp</in>
-      <in>parser.hpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

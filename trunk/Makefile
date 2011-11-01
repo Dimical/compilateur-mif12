@@ -27,7 +27,7 @@ DEPS    = $(SRCS_CPP:$(SRC)%.cpp=$(DEP_DIR)%.d)
 
 #Liste des objets : .cpp, .c, .y, .l ==> .o
 OBJS    = $(SRCS_CPP:$(SRC)%.cpp=$(OBJ)%.o) \
-          $(SRCS_Y:$(SRC_DIR)%.y=$(OBJ_DIR)%.o) $(SRCS_L:$(SRC_DIR)%.l=$(OBJ_DIR)%.o)
+          $(SRCS_Y:$(SRC)%.y=$(OBJ)%.o) $(SRCS_L:$(SRC)%.l=$(OBJ)%.o)
 
 #Compilation
 all: $(BIN)/$(PROG)
@@ -55,7 +55,7 @@ $(DEP_DIR)%.d: $(SRC)%.cpp
 	$(CPP) -o $@ $<
 
 clean:
-	rm -f $(OBJ)*.o $(SRC)*~ $(DEP)*.d *~ $(BIN)/$(PROG)
+	rm -f $(OBJ)*.o $(SRC)*~ $(DEP)*.d *~ $(BIN)/$(PROG) $(INC)*.hpp
 
 distclean: clean
 	rm -f $(BIN)/$(PROG)
