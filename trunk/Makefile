@@ -2,6 +2,9 @@
 SRC = ./sources/
 OBJ = ./objets/
 DEP = ./dependances/
+BIN = ./
+
+INC = ./include/
 
 PROG = prog
 
@@ -11,6 +14,7 @@ FLEX = flex
 BISON = bison -d
 
 #Flags
+CPPFLAGS = -I$(INC) -g -Wall -pipe
 FLAGS = -lfl
 
 #Fichiers
@@ -39,6 +43,9 @@ $(OBJ)%.o: $(SRC)%.cpp
 #To SRC
 $(SRC)%.cpp : $(SRC)%.l 
 	$(FLEX) -o $@ $<
+	rm -f $(INC)parser.hpp
+	mv -v $(SRC)parser.hpp $(INC)
+
 
 $(SRC)%.cpp : $(SRC)%.y
 	$(BISON) -o $@ $<
