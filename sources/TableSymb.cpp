@@ -5,7 +5,7 @@
  * Created on 14 octobre 2011, 11:20
  */
 
-#include "TableSymb.hpp"
+#include "../headers/TableSymb.hpp"
 
 TableSymb::TableSymb() {
 }

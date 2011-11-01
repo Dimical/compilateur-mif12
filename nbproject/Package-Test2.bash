@@ -11,8 +11,8 @@ CND_CONF=Test2
 CND_DISTDIR=dist
 NBTMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=MissingOutputInProject
-OUTPUT_BASENAME=MissingOutputInProject
+OUTPUT_PATH=./prog
+OUTPUT_BASENAME=prog
 PACKAGE_TOP_DIR=compilateur-mif12/
 
 # Functions

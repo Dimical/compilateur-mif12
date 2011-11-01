@@ -5,13 +5,13 @@
  * Created on 14 octobre 2011, 09:00
  */
 
-#include "TableId.hpp"
+#include "../headers/TableId.hpp"
 
 using namespace std;
 
 TableId::TableId(void)
 {
-   // this->Champ.insert( std::map<int, std::string>::value_type(0, "a"));
+    //this->Champ.insert( std::map<int, std::string>::value_type(0, "a"));
     //this->Champ.insert( std::map<int, std::string>::value_type(1, "b"));
 }
 int TableId::Ajout(std::string id)

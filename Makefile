@@ -1,23 +1,64 @@
-A_SUPR = *.o prog parser.cpp parser.hpp lexer.cpp
+# les repertoires
+SRC = ./sources/
+OBJ = ./objets/
+DEP = ./dependances/
 
-prog: lexer.o parser.o TableId.o
-	g++ -o prog parser.o lexer.o TableId.o -lfl
+PROG = prog
 
-lexer.o: lexer.cpp
-	g++ -o lexer.o -c lexer.cpp
+#Commandes
+CPP = g++
+FLEX = flex
+BISON = bison -d
 
-lexer.cpp: lexer.l parser.cpp
-	flex -o lexer.cpp lexer.l
+#Flags
+FLAGS = -lfl
 
-parser.o: parser.cpp TableId.o
-	g++ -o parser.o TableId.o -c parser.cpp
+#Fichiers
+SRCS_CPP = $(wildcard $(SRC)*.cpp)
+SRCS_L = $(wildcard $(SRC)*.l)
+SRCS_Y = $(wildcard $(SRC)*.y)
 
-parser.cpp: parser.y
-	bison -d -o parser.cpp parser.y
+#Liste des dépendances .cpp, .c ==> .d
+DEPS    = $(SRCS_CPP:$(SRC)%.cpp=$(DEP_DIR)%.d)
 
-TableId.o: TableId.cpp
-	g++ -o TableId.o -c TableId.cpp
+#Liste des objets : .cpp, .c, .y, .l ==> .o
+OBJS    = $(SRCS_CPP:$(SRC)%.cpp=$(OBJ)%.o) \
+          $(SRCS_Y:$(SRC_DIR)%.y=$(OBJ_DIR)%.o) $(SRCS_L:$(SRC_DIR)%.l=$(OBJ_DIR)%.o)
+
+#Compilation
+all: $(BIN)/$(PROG)
+
+#To executable
+$(BIN)/$(PROG): $(OBJS)
+	$(CPP) $+ -o $@ $(FLAGS)
+
+#To Objets
+$(OBJ)%.o: $(SRC)%.cpp
+	$(CPP) -o $@ -c $<
+
+#To SRC
+$(SRC)%.cpp : $(SRC)%.l 
+	$(FLEX) -o $@ $<
+
+$(SRC)%.cpp : $(SRC)%.y
+	$(BISON) -o $@ $<
+
+#Gestion des dépendances
+$(DEP_DIR)%.d: $(SRC)%.cpp
+	$(CPP) -o $@ $<
 
 clean:
-	rm $(A_SUPR)
+	rm -f $(OBJ)*.o $(SRC)*~ $(DEP)*.d *~ $(BIN)/$(PROG)
 
+distclean: clean
+	rm -f $(BIN)/$(PROG)
+
+store:
+	mkdir -p $(SRC)
+	mkdir -p $(OBJ)
+	mkdir -p $(DEP)
+	mv -v *.cpp $(SRC)
+	mv -v lexer.l $(SRC)
+	mv -v parser.y $(SRC)
+	mv -v *.o $(OBJ)
+	mv -v *.d $(DEP)
