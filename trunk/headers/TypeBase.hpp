@@ -8,6 +8,8 @@
 #ifndef TYPEBASE_HPP
 #define	TYPEBASE_HPP
 
+#include"Type.hpp"
+
 class TypeBase: public Type
 {
 public:
@@ -15,8 +17,8 @@ public:
     TypeBase(const TypeBase& orig);
     virtual ~TypeBase();
 private:
-    TypeBase operator+( TypeBase &T1, TypeBase &T2 );
-    bool operator==( TypeBase const&T1, TypeBase const&T2);
+  //  TypeBase operator+( TypeBase &T1, TypeBase &T2 );
+   // bool operator==( TypeBase const&T1, TypeBase const&T2);
 
 };
 

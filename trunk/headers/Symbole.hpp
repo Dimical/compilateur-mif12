@@ -18,8 +18,8 @@ private:
     
 public:
     // classe abstraite
-    virtual Symbole();
-    virtual Symbole(const Symbole& orig);
+    Symbole();
+    Symbole(const Symbole& orig);
     virtual ~Symbole();
 
 };
