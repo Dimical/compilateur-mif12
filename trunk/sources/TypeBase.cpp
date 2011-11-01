@@ -5,7 +5,7 @@
  * Created on 14 octobre 2011, 10:37
  */
 
-#include "TypeBase.hpp"
+#include "../headers/TypeBase.hpp"
 
 TypeBase::TypeBase() {
 }

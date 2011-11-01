@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <iostream>
-#include "TableId.hpp"
+#include "../headers/TableId.hpp"
 
 extern FILE* yyin;
 

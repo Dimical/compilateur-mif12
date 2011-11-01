@@ -2,32 +2,29 @@
 <configurationDescriptor version="69">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <df name="compilateur-mif12" root=".">
-      <df name="tests">
-        <in>test-01.pas</in>
-        <in>test-02.pas</in>
-        <in>test-03.pas</in>
-        <in>test-04.pas</in>
-        <in>test-05.pas</in>
-        <in>test-06.pas</in>
-        <in>test-07.pas</in>
-        <in>test-08.pas</in>
-        <in>test-09.pas</in>
-        <in>test-10.pas</in>
-        <in>test-11.pas</in>
-        <in>test-12.pas</in>
+      <df name="dependances">
+      </df>
+      <df name="headers">
+        <in>Symbole.hpp</in>
+        <in>TableId.hpp</in>
+        <in>TableSymb.hpp</in>
+        <in>Type.hpp</in>
+        <in>TypeBase.hpp</in>
+      </df>
+      <df name="objets">
+      </df>
+      <df name="sources">
+        <in>Symbole.cpp</in>
+        <in>TableId.cpp</in>
+        <in>TableSymb.cpp</in>
+        <in>Type.cpp</in>
+        <in>TypeBase.cpp</in>
+        <in>lexer.cpp</in>
+        <in>main.cpp</in>
+        <in>parser.cpp</in>
+        <in>parser.hpp</in>
       </df>
       <in>Code3ad.hpp</in>
-      <in>Symbole.cpp</in>
-      <in>Symbole.hpp</in>
-      <in>TableId.cpp</in>
-      <in>TableId.hpp</in>
-      <in>TableSymb.cpp</in>
-      <in>TableSymb.hpp</in>
-      <in>Type.cpp</in>
-      <in>Type.hpp</in>
-      <in>lexer.cpp</in>
-      <in>main.cpp</in>
-      <in>parser.cpp</in>
       <in>parser.hpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -101,7 +98,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -116,7 +113,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -131,7 +128,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -146,7 +143,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -161,7 +158,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -221,7 +218,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -236,7 +233,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>
@@ -251,7 +248,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE}</buildCommand>
           <cleanCommand>${MAKE} clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>./prog</executablePath>
         </makeTool>
       </makefileType>
     </conf>

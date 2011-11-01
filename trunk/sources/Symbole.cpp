@@ -5,7 +5,7 @@
  * Created on 14 octobre 2011, 10:11
  */
 
-#include "Symbole.hpp"
+#include "../headers/Symbole.hpp"
 
 
 Symbole::Symbole() {

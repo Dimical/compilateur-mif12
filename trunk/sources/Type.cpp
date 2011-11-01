@@ -5,7 +5,7 @@
  * Created on 21 octobre 2011, 16:29
  */
 
-#include "Type.hpp"
+#include "../headers/Type.hpp"
 
 Type::Type() {
 }

@@ -9,8 +9,8 @@
 #include <cstdio>
 #include <cmath>
 
-#include "parser.hpp"
-#include "TableId.hpp"
+#include "../parser.hpp"
+#include "../headers/TableId.hpp"
 
 extern int row, column;
 
