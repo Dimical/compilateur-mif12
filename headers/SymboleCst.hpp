@@ -9,18 +9,20 @@
 #define	SYMBOLECST_HPP
 
 #include "Symbole.hpp"
+#include "Type.hpp"
 
 
 class SymboleCst : public Symbole
 {
 public:
-    Type value;
-    // type, valeur, code 3@
 
     SymboleCst();
     SymboleCst(const SymboleCst& orig);
     virtual ~SymboleCst();
+
 private:
+    Type value;
+    // type, valeur, code 3@
 
 };
 

@@ -9,18 +9,20 @@
 #define	SYMBOLEVAR_HPP
 
 #include "Symbole.hpp"
+#include "Type.hpp"
 
 
 class SymboleVar : public Symbole
 {
 public:
-    Type value;
-    // type, valeur, code 3@
     
     SymboleVar();
     SymboleVar(const SymboleVar& orig);
     virtual ~SymboleVar();
+
 private:
+    Type value;
+    // type, valeur, code 3@
 
 };
 

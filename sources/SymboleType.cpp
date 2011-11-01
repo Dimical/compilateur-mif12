@@ -1,0 +1,18 @@
+/* 
+ * File:   SymboleType.cpp
+ * Author: bilal
+ * 
+ * Created on 1 novembre 2011, 16:38
+ */
+
+#include "../headers/SymboleType.hpp"
+
+SymboleType::SymboleType() {
+}
+
+SymboleType::SymboleType(const SymboleType& orig) {
+}
+
+SymboleType::~SymboleType() {
+}
+
