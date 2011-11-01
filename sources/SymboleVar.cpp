@@ -5,7 +5,7 @@
  * Created on 21 octobre 2011, 16:48
  */
 
-#include "SymboleVar.hpp"
+#include "../headers/SymboleVar.hpp"
 
 SymboleVar::SymboleVar() {
 }
