@@ -3,6 +3,24 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <df name="compilateur-mif12" root=".">
       <df name="dependances">
+        <df name=".svn">
+          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
+            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+          </df>
+          <in>all-wcprops</in>
+          <in>entries</in>
+        </df>
       </df>
       <df name="headers">
         <in>Symbole.hpp</in>
@@ -14,6 +32,35 @@
       <df name="objets">
       </df>
       <df name="sources">
+        <df name=".svn">
+          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+          </df>
+          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            <in>Symbole.cpp.svn-base</in>
+            <in>TableId.cpp.svn-base</in>
+            <in>TableSymb.cpp.svn-base</in>
+            <in>Type.cpp.svn-base</in>
+            <in>TypeBase.cpp.svn-base</in>
+            <in>lexer.cpp.svn-base</in>
+            <in>lexer.l.svn-base</in>
+            <in>main.cpp.svn-base</in>
+            <in>parser.cpp.svn-base</in>
+            <in>parser.hpp.svn-base</in>
+            <in>parser.y.svn-base</in>
+          </df>
+          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
+            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
+            </df>
+          </df>
+          <in>all-wcprops</in>
+          <in>entries</in>
+        </df>
         <in>Symbole.cpp</in>
         <in>TableId.cpp</in>
         <in>TableSymb.cpp</in>
