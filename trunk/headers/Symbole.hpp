@@ -17,9 +17,10 @@ private:
     Type T;
     
 public:
-    Symbole();
-    Symbole(const Symbole& orig);
-    ~Symbole();
+    // classe abstraite
+    virtual Symbole();
+    virtual Symbole(const Symbole& orig);
+    virtual ~Symbole();
 
 };
 
