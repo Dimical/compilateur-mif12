@@ -5,7 +5,7 @@
  * Created on 1 novembre 2011, 16:23
  */
 
-#include "SymboleFonction.hpp"
+#include "../headers/SymboleFonction.hpp"
 
 SymboleFonction::SymboleFonction() {
 }
