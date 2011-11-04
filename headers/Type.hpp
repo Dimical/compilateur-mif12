@@ -14,7 +14,7 @@ public:
     Type(const Type& orig);
     virtual ~Type();
 private:
-
+    bool operator==( Type const&T1);
 };
 
 #endif	/* TYPE_HPP */
