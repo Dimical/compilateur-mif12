@@ -11,6 +11,7 @@
 #include "Symbole.hpp"
 #include "TableSymb.hpp"
 #include "Type.hpp"
+#include <string>
 
 class SymboleFonction : public Symbole
 {
@@ -18,11 +19,12 @@ public:
     SymboleFonction();
     SymboleFonction(const SymboleFonction& orig);
     virtual ~SymboleFonction();
+   // std::string toString();
 
 private:
-    Type value;
     //on fait une reference sur une autre table de symbole
     TableSymb * TabS;
+    int arite; //nombre d'arguments
 
 };
 

@@ -7,6 +7,7 @@
 
 #ifndef TYPE_HPP
 #define	TYPE_HPP
+#include <string>
 
 #include <string>
 

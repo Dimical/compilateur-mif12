@@ -15,11 +15,14 @@ class TableSymb {
 
 public:
     TableSymb();
-    TableSymb(const TableSymb& orig);
-    ~TableSymb();
+    void Ajout(Symbole Sym, int id);
+    void Afficher();
+     TableSymb(const TableSymb& orig);
+    ~TableSymb(void);
 private:
     std::map<int, Symbole> TS; // Notre map
 
+    
 };
 
 #endif	/* TABLESYMB_HPP */

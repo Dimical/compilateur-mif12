@@ -67,6 +67,7 @@ std::string TableId::getidTOnum(int num)
     return this->Champ[num];
 
 }
+
 TableId::~TableId(void)
 {
 

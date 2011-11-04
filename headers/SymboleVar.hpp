@@ -10,6 +10,7 @@
 
 #include "Symbole.hpp"
 #include "Type.hpp"
+#include <string>
 
 
 class SymboleVar : public Symbole
@@ -19,9 +20,10 @@ public:
     SymboleVar();
     SymboleVar(const SymboleVar& orig);
     virtual ~SymboleVar();
-
+ //   std::string toString();
+    SymboleVar(Type t);
 private:
-    Type value;
+    
     // type, valeur, code 3@
 
 };

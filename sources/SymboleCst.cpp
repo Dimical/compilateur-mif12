@@ -16,3 +16,7 @@ SymboleCst::SymboleCst(const SymboleCst& orig) {
 SymboleCst::~SymboleCst() {
 }
 
+//std::string toString(){
+//    return("");
+//}
+

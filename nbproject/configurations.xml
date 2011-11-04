@@ -3,28 +3,15 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <df name="compilateur-mif12" root=".">
       <df name="dependances">
-        <df name=".svn">
-          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
-            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-          </df>
-          <in>all-wcprops</in>
-          <in>entries</in>
-        </df>
       </df>
       <df name="headers">
         <in>Symbole.hpp</in>
+        <in>SymboleArg.hpp</in>
         <in>SymboleCst.hpp</in>
+        <in>SymboleFonction.hpp</in>
+        <in>SymboleProcedure.hpp</in>
+        <in>SymboleProg.hpp</in>
+        <in>SymboleType.hpp</in>
         <in>SymboleVar.hpp</in>
         <in>TableId.hpp</in>
         <in>TableSymb.hpp</in>
@@ -32,100 +19,25 @@
         <in>TypeBase.hpp</in>
       </df>
       <df name="include">
-        <df name=".svn">
-          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
-            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-          </df>
-          <in>all-wcprops</in>
-          <in>entries</in>
-        </df>
+        <in>parser.hpp</in>
       </df>
       <df name="objets">
-        <df name=".svn">
-          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
-            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-          </df>
-          <in>all-wcprops</in>
-          <in>entries</in>
-        </df>
       </df>
       <df name="sources">
-        <df name=".svn">
-          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            <in>Symbole.cpp.svn-base</in>
-            <in>TableId.cpp.svn-base</in>
-            <in>TableSymb.cpp.svn-base</in>
-            <in>Type.cpp.svn-base</in>
-            <in>lexer.l.svn-base</in>
-            <in>parser.y.svn-base</in>
-          </df>
-          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
-            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-          </df>
-          <in>all-wcprops</in>
-          <in>entries</in>
-        </df>
         <in>Symbole.cpp</in>
+        <in>SymboleArg.cpp</in>
+        <in>SymboleCst.cpp</in>
+        <in>SymboleFonction.cpp</in>
+        <in>SymboleProcedure.cpp</in>
+        <in>SymboleProg.cpp</in>
+        <in>SymboleType.cpp</in>
+        <in>SymboleVar.cpp</in>
         <in>TableId.cpp</in>
         <in>TableSymb.cpp</in>
         <in>Type.cpp</in>
-        <in>parser.hpp</in>
+        <in>TypeBase.cpp</in>
       </df>
       <df name="temp">
-        <df name=".svn">
-          <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-          </df>
-          <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            <in>SymboleCst.cpp.svn-base</in>
-            <in>SymboleVar.cpp.svn-base</in>
-            <in>TypeBase.cpp.svn-base</in>
-          </df>
-          <df name="tmp" kind="SOURCE_LOGICAL_FOLDER">
-            <df name="prop-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="props" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-            <df name="text-base" kind="SOURCE_LOGICAL_FOLDER">
-            </df>
-          </df>
-          <in>entries</in>
-        </df>
-        <in>SymboleCst.cpp</in>
-        <in>SymboleVar.cpp</in>
-        <in>TypeBase.cpp</in>
       </df>
       <in>Code3ad.hpp</in>
     </df>

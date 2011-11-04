@@ -10,16 +10,20 @@
 
 #include "Symbole.hpp"
 #include "Type.hpp"
+#include <string>
 
 class SymboleArg : public Symbole
 {
 public:
     SymboleArg();
     SymboleArg(const SymboleArg& orig);
+    SymboleArg(Type t, bool b, int pos);
     virtual ~SymboleArg();
+   // std::string toString();
 
 private:
-    Type value;
+    bool variable;
+    int position;
 
 
 };

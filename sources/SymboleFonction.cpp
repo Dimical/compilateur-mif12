@@ -16,3 +16,6 @@ SymboleFonction::SymboleFonction(const SymboleFonction& orig) {
 SymboleFonction::~SymboleFonction() {
 }
 
+//std::string toString(){
+//    return("");
+//}

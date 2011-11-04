@@ -10,9 +10,17 @@
 SymboleVar::SymboleVar() {
 }
 
+SymboleVar::SymboleVar(Type t) {
+    //this->T=t;
+}
+
 SymboleVar::SymboleVar(const SymboleVar& orig) {
 }
 
 SymboleVar::~SymboleVar() {
 }
+
+//std::string toString(){
+//    return("");
+//}
 
