@@ -16,9 +16,10 @@ public:
     TypeBase();
     TypeBase(const TypeBase& orig);
     virtual ~TypeBase();
+
 private:
-  //  TypeBase operator+( TypeBase &T1, TypeBase &T2 );
-   // bool operator==( TypeBase const&T1, TypeBase const&T2);
+    //TypeBase operator+( TypeBase const& T1, TypeBase const& T2 );
+    //bool operator==( TypeBase const&T1, TypeBase const&T2);
 
 };
 
