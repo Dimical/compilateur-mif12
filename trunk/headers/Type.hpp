@@ -8,13 +8,17 @@
 #ifndef TYPE_HPP
 #define	TYPE_HPP
 
+#include <string>
+
 class Type {
 public:
     Type();
     Type(const Type& orig);
     virtual ~Type();
-private:
+    std::string getClass();
     bool operator==( Type const&T1);
+private:
+    
 };
 
 #endif	/* TYPE_HPP */
