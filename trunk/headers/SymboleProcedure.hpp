@@ -10,6 +10,7 @@
 
 #include "Symbole.hpp"
 #include "TableSymb.hpp"
+#include <string>
 
 class SymboleProcedure : public Symbole
 {
@@ -17,10 +18,12 @@ public:
     SymboleProcedure();
     SymboleProcedure(const SymboleProcedure& orig);
     virtual ~SymboleProcedure();
+  //  std::string toString();
 
 private:
     //on fait une reference sur une autre table de symbole
     TableSymb * TabS;
+    int arite; //nombre d'arguments
 };
 
 #endif	/* SYMBOLEPROCEDURE_HPP */

@@ -16,3 +16,6 @@ SymboleType::SymboleType(const SymboleType& orig) {
 SymboleType::~SymboleType() {
 }
 
+//std::string toString(){
+//    return("");
+//}

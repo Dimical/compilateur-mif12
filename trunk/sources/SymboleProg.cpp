@@ -16,3 +16,6 @@ SymboleProg::SymboleProg(const SymboleProg& orig) {
 SymboleProg::~SymboleProg() {
 }
 
+//std::string toString(){
+//    return("");
+//}

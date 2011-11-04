@@ -10,6 +10,7 @@
 
 #include "Symbole.hpp"
 #include "Type.hpp"
+#include <string>
 
 class SymboleType : public Symbole
 {
@@ -17,10 +18,10 @@ public:
     SymboleType();
     SymboleType(const SymboleType& orig);
     virtual ~SymboleType();
+   // std::string toString();
 
 private:
-    Type value;
-
+    
 };
 
 #endif	/* SYMBOLETYPE_HPP */

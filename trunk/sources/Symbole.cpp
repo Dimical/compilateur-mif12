@@ -17,3 +17,7 @@ Symbole::Symbole(const Symbole& orig) {
 Symbole::~Symbole() {
 }
 
+/*std::string toString(){
+}*/
+
+

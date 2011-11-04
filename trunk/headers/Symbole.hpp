@@ -21,6 +21,7 @@ public:
     Symbole();
     Symbole(const Symbole& orig);
     virtual ~Symbole();
+  //  std::string toString();
 
 };
 

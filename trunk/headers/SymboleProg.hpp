@@ -9,6 +9,7 @@
 #define	SYMBOLEPROG_HPP
 
 #include "Symbole.hpp"
+#include <string>
 
 class SymboleProg : public Symbole
 {
@@ -16,6 +17,7 @@ public:
     SymboleProg();
     SymboleProg(const SymboleProg& orig);
     virtual ~SymboleProg();
+   // std::string toString();
 
 private:
 

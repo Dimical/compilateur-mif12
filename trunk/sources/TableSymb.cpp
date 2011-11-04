@@ -7,12 +7,25 @@
 
 #include "../headers/TableSymb.hpp"
 
-TableSymb::TableSymb() {
+using namespace std;
+
+TableSymb::TableSymb(void) {
 }
 
-TableSymb::TableSymb(const TableSymb& orig) {
+void TableSymb::Ajout(Symbole Sym, int id) {
+    this->TS[id] = Sym;
 }
 
-TableSymb::~TableSymb() {
+void TableSymb::Afficher() {
+    std::map<int, Symbole>::const_iterator iter;
+    for(iter= TS.begin(); iter != TS.end(); ++iter)
+    {
+     //   cout<<iter->first<<"\t"<< iter->second<<"\n"<<endl;
+    }
+}
+
+TableSymb::~TableSymb(void)
+{
+
 }
 

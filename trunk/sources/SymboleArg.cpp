@@ -10,9 +10,17 @@
 SymboleArg::SymboleArg() {
 }
 
+SymboleArg::SymboleArg(Type t, bool b, int pos) {
+//    this->T=t;
+    this->variable=b;
+    this->position=pos;
+}
+
 SymboleArg::SymboleArg(const SymboleArg& orig) {
 }
 
 SymboleArg::~SymboleArg() {
 }
-
+/*std::string toString(){
+    return("");
+}*/
