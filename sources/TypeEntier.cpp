@@ -15,10 +15,14 @@ TypeEntier::TypeEntier(const TypeEntier& orig) {
 
 TypeEntier::~TypeEntier() {
 }
-bool TypeEntier::operator ==(Type T1)
+bool TypeEntier::operator ==(Type const&T1)
 {
-    if(this == T1)
+    /*if(this->getClass() == T1->getClass())
         return true;
+    return false;*/
     return false;
 }
-
+std::string TypeEntier::getClass()
+{
+    return "toto";
+}
