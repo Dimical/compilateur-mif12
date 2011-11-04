@@ -4,10 +4,12 @@
 #include <cstdio>
 #include <iostream>
 #include "../headers/TableId.hpp"
+#include "../headers/TableSymb.hpp"
 
 extern FILE* yyin;
 
 extern TableId *tableid;
+extern TableSymb *tablesy;
 
 extern int yyparse();
 extern int yyerror ( char* );
@@ -351,5 +353,5 @@ int main ( int argc, char** argv )
 	tableid=new TableId();
 	yyparse ();
 	tableid->Affichage();
-	fclose ( yyin );
+        fclose ( yyin );
 }

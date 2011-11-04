@@ -38,11 +38,13 @@ void TableId::Affichage()
 {
     // On créer notre itérateur sur notre map
     std::map<int, std::string>::const_iterator iter;
+    cout << "+++IdentificatorTable" <<endl;
     for (iter= Champ.begin(); iter !=Champ.end(); ++iter)
     {
         // on affichage le numéro avec son identifiant
-        cout<< iter->first << '\t' << iter->second << '\n' <<endl;
+        cout<< "\t    " << iter->first << " : " << iter->second <<endl;
     }
+    cout << "---IdentificatorTable" <<endl;
 
 }
 int TableId::getnumTOid(std::string id) // Dans tous les cas, on est obligé de tester si un identificateur est dans la table
