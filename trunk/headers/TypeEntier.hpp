@@ -14,13 +14,13 @@
 class TypeEntier : public Type
 {
 public:
-
     TypeEntier();
     TypeEntier(const TypeEntier& orig);
-    virtual ~TypeEntier();
-
+    ~TypeEntier();
+    std::string getClass();
+    bool operator ==(Type const& T1);
 private:
-
+    
 };
 
 #endif	/* TYPEENTIER_HPP */
