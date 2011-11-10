@@ -7,7 +7,7 @@
 
 #include "../headers/SymboleVar.hpp"
 
-SymboleVar::SymboleVar() {
+SymboleVar::SymboleVar(): Symbole() {
 }
 
 SymboleVar::SymboleVar(Type t) {

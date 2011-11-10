@@ -7,7 +7,7 @@
 
 #include "../headers/SymboleProg.hpp"
 
-SymboleProg::SymboleProg() {
+SymboleProg::SymboleProg(): Symbole() {
 }
 
 SymboleProg::SymboleProg(const SymboleProg& orig) {

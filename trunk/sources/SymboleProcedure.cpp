@@ -7,7 +7,7 @@
 
 #include "../headers/SymboleProcedure.hpp"
 
-SymboleProcedure::SymboleProcedure() {
+SymboleProcedure::SymboleProcedure(): Symbole() {
 }
 
 SymboleProcedure::SymboleProcedure(const SymboleProcedure& orig) {
