@@ -60,12 +60,3 @@ clean:
 distclean: clean
 	rm -f $(BIN)/$(PROG)
 
-store:
-	mkdir -p $(SRC)
-	mkdir -p $(OBJ)
-	mkdir -p $(DEP)
-	mv -v *.cpp $(SRC)
-	mv -v lexer.l $(SRC)
-	mv -v parser.y $(SRC)
-	mv -v *.o $(OBJ)
-	mv -v *.d $(DEP)
