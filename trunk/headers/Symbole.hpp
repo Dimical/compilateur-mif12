@@ -13,7 +13,7 @@
 
 class Symbole{
 
-private:
+protected:
     Type T;
     
 public:

@@ -8,11 +8,11 @@
 
 #include "../headers/SymboleArg.hpp"
 
-SymboleArg::SymboleArg(): Symbole() {
+SymboleArg::SymboleArg() {
 }
 
 SymboleArg::SymboleArg(Type t, bool b, int pos){
-//    this->T=t;
+    this->T=t;
     this->variable=b;
     this->position=pos;
 }
