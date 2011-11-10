@@ -6,6 +6,8 @@
 #include "../headers/TableId.hpp"
 #include "../headers/TableSymb.hpp"
 
+using namespace std;
+
 extern FILE* yyin;
 
 extern TableId *tableid;
@@ -100,7 +102,7 @@ extern int yylex ();
 
 %%
 
-Program				:	ProgramHeader SEP_SCOL Block SEP_DOT
+Program				:	ProgramHeader SEP_SCOL Block SEP_DOT {cout << "debut du prog" << endl;}
 				;
 
 ProgramHeader			:	KW_PROGRAM TOK_IDENT
@@ -139,7 +141,7 @@ ListDeclVar			:	ListDeclVar DeclVar
 			 	|	DeclVar
 			 	;
 
-DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL
+DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{cout << "ajout d un symbole" << endl;}
 			 	;
 
 ListIdent			:	ListIdent SEP_COMMA TOK_IDENT
@@ -259,7 +261,7 @@ RecordField			:	ListIdent SEP_DOTS Type
 PointerType			:	OP_PTR Type
 			 	;
 
-BlockCode			:	KW_BEGIN ListInstr KW_END
+BlockCode			:	KW_BEGIN ListInstr KW_END {cout << "jai un blok" << endl;}
 				|	KW_BEGIN ListInstr SEP_SCOL KW_END
 				|	KW_BEGIN KW_END
 			 	;
