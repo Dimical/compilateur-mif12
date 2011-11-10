@@ -19,6 +19,7 @@ private:
 public:
     // classe abstraite
     Symbole();
+    Symbole(Type t);
     Symbole(const Symbole& orig);
     virtual ~Symbole();
   //  std::string toString();
