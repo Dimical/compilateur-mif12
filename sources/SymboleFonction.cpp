@@ -7,7 +7,7 @@
 
 #include "../headers/SymboleFonction.hpp"
 
-SymboleFonction::SymboleFonction() {
+SymboleFonction::SymboleFonction(): Symbole() {
 }
 
 SymboleFonction::SymboleFonction(const SymboleFonction& orig) {

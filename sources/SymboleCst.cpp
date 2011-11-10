@@ -7,7 +7,11 @@
 
 #include "../headers/SymboleCst.hpp"
 
-SymboleCst::SymboleCst() {
+SymboleCst::SymboleCst(): Symbole() {
+}
+
+SymboleCst::SymboleCst(Type t){
+
 }
 
 SymboleCst::SymboleCst(const SymboleCst& orig) {

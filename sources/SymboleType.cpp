@@ -7,7 +7,7 @@
 
 #include "../headers/SymboleType.hpp"
 
-SymboleType::SymboleType() {
+SymboleType::SymboleType(): Symbole() {
 }
 
 SymboleType::SymboleType(const SymboleType& orig) {

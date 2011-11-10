@@ -11,6 +11,10 @@
 Symbole::Symbole() {
 }
 
+Symbole::Symbole(Type t){
+    this->T = t;
+}
+
 Symbole::Symbole(const Symbole& orig) {
 }
 
