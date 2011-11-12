@@ -17,7 +17,7 @@ public:
     SymboleProg();
     SymboleProg(const SymboleProg& orig);
     virtual ~SymboleProg();
-   // std::string toString();
+    std::string toString();
 
 private:
 

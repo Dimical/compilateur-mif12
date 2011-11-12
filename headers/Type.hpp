@@ -18,6 +18,7 @@ public:
     virtual ~Type();
     std::string getClass();
     bool operator==( Type const&T1);
+    
 private:
     
 };
