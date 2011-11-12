@@ -11,7 +11,7 @@ SymboleVar::SymboleVar(): Symbole() {
 }
 
 SymboleVar::SymboleVar(Type t) {
-    //this->T=t;
+    this->T=t;
 }
 
 SymboleVar::SymboleVar(const SymboleVar& orig) {
@@ -20,7 +20,6 @@ SymboleVar::SymboleVar(const SymboleVar& orig) {
 SymboleVar::~SymboleVar() {
 }
 
-//std::string toString(){
-//    return("");
-//}
-
+std::string SymboleVar::toString(){
+    return "Variable\t[type:"+this->T.getClass()+"]";
+}

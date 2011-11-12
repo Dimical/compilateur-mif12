@@ -20,7 +20,7 @@ public:
     SymboleVar();
     SymboleVar(const SymboleVar& orig);
     virtual ~SymboleVar();
- //   std::string toString();
+    std::string toString();
     SymboleVar(Type t);
 private:
     

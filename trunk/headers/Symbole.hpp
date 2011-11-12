@@ -22,7 +22,7 @@ public:
     Symbole(Type t);
     Symbole(const Symbole& orig);
     virtual ~Symbole();
-  //  std::string toString();
+    std::string toString();
 
 };
 

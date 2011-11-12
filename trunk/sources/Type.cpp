@@ -15,4 +15,3 @@ Type::Type(const Type& orig) {
 
 Type::~Type() {
 }
-

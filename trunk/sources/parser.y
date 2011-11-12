@@ -5,13 +5,23 @@
 #include <iostream>
 #include "../headers/TableId.hpp"
 #include "../headers/TableSymb.hpp"
+#include "../headers/Symbole.hpp"
+#include "../headers/SymboleVar.hpp"
+#include "../headers/SymboleProg.hpp"
+#include "../headers/Type.hpp"
+#include "../headers/TypeEntier.hpp"
 
 using namespace std;
 
 extern FILE* yyin;
 
 extern TableId *tableid;
-extern TableSymb *tablesy;
+TableSymb *table = new TableSymb();
+
+Type *t = new TypeEntier();
+
+Symbole *var = new SymboleVar(*t);
+Symbole *prog = new SymboleProg();
 
 extern int yyparse();
 extern int yyerror ( char* );
@@ -102,7 +112,7 @@ extern int yylex ();
 
 %%
 
-Program				:	ProgramHeader SEP_SCOL Block SEP_DOT {cout << "debut du prog" << endl;}
+Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { table->Ajout(*prog);}
 				;
 
 ProgramHeader			:	KW_PROGRAM TOK_IDENT
@@ -119,7 +129,7 @@ ListDeclConst			:	ListDeclConst DeclConst
 			 	|	DeclConst
 			 	;
 
-DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL
+DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL {cout << "il faut ajouter une constante a la table des symboles" << endl;}
 			 	;
 
 BlockDeclType			:	KW_TYPE ListDeclType
@@ -130,7 +140,7 @@ ListDeclType			:	ListDeclType DeclType
 			 	|	DeclType
 			 	;
 
-DeclType			:	TOK_IDENT OP_EQ Type SEP_SCOL
+DeclType			:	TOK_IDENT OP_EQ Type SEP_SCOL {cout << "il faut ajouter un type a la table des symboles" << endl;}
 			 	;
 
 BlockDeclVar			:	KW_VAR ListDeclVar
@@ -141,7 +151,7 @@ ListDeclVar			:	ListDeclVar DeclVar
 			 	|	DeclVar
 			 	;
 
-DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{cout << "ajout d un symbole" << endl;}
+DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{ table->Ajout(*var);}
 			 	;
 
 ListIdent			:	ListIdent SEP_COMMA TOK_IDENT
@@ -355,5 +365,6 @@ int main ( int argc, char** argv )
 	tableid=new TableId();
 	yyparse ();
 	tableid->Affichage();
+	table->Afficher(*tableid);
         fclose ( yyin );
 }

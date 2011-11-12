@@ -9,19 +9,24 @@
 #define	TABLESYMB_HPP
 
 #include "Symbole.hpp"
+#include "SymboleVar.hpp"
 #include "TableId.hpp"
+#include "Type.hpp"
+#include "TypeEntier.hpp"
 
 class TableSymb {
 
 public:
     TableSymb();
-    void Ajout(Symbole Sym, int id);
-    void Afficher();
+    void Ajout(Symbole Sym);
+    void Afficher(TableId Tid);
      TableSymb(const TableSymb& orig);
     ~TableSymb(void);
-private:
-    std::map<int, Symbole> TS; // Notre map
 
+    void Test();
+
+    std::map<int, Symbole> TS; // Notre map
+private:
     
 };
 
