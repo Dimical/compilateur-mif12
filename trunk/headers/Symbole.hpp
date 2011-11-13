@@ -10,6 +10,7 @@
 
 #include "TableId.hpp"
 #include "Type.hpp"
+#include <iostream>
 
 class Symbole{
 
@@ -22,7 +23,8 @@ public:
     Symbole(Type t);
     Symbole(const Symbole& orig);
     virtual ~Symbole();
-    std::string toString();
+    virtual void toString(std::ostream &flux) const;
+    friend std::ostream &operator<<(std::ostream &flux, Symbole const& sym);
 
 };
 
