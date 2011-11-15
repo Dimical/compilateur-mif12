@@ -6,7 +6,6 @@
  */
 
 #include "../headers/Symbole.hpp"
-
 using namespace std;
 
 Symbole::Symbole() {
@@ -22,11 +21,17 @@ Symbole::Symbole(const Symbole& orig) {
 Symbole::~Symbole() {
 }
 
-//std::string toString(){
-//    return "";
-//}
-
-std::ostream& operator<<(std::ostream& s, const Symbole& sym)
+std::ostream & Symbole::toString(std::ostream &flux) const
 {
-s << sym.toString();
+    return flux << "testSymb";
 }
+
+
+inline ostream &operator<<(ostream &flux,const Symbole& sym)
+{
+    
+     // <- Changement ici
+    return sym.toString(flux) ;
+}
+
+
