@@ -20,7 +20,12 @@ SymboleVar::SymboleVar(const SymboleVar& orig) {
 SymboleVar::~SymboleVar() {
 }
 
-//std::string toString(){
-//    return("");
-//}
 
+std::ostream & SymboleVar::toString(std::ostream &flux) const
+{
+    return flux << "testssymboleVAR";
+}
+
+//std::string SymboleVar::toString(){
+//    return "Variable\t[type:"+this->T.getClass()+"]";
+//}
