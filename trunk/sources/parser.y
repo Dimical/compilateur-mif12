@@ -25,6 +25,7 @@ Symbole *var = new SymboleVar(*t);
 Symbole *prog = new SymboleProg();
 
 vector <int> DeclVarMult;
+vector <char *> Code3adresses;
 
 
 extern int yyparse();
@@ -165,7 +166,7 @@ ListDeclVar			:	ListDeclVar DeclVar
 DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{
                                                                             for (unsigned int i=0;i<DeclVarMult.size(); i++){
                                                                                 Symbole *temp = new SymboleVar(*$3);
-                                                                                /*cout<< DeclVarMult.at(i) << endl; */                                                                           /*cout << tableid->getnumTOid(DeclVarMult[i]);*/
+                                                                                /*cout<< DeclVarMult.at(i) << endl;*/                                                                           /*cout << tableid->getnumTOid(DeclVarMult[i]);*/
                                                                                 table->Ajout(temp, DeclVarMult[i]);
                                                                             }
                                                                             DeclVarMult.clear();
