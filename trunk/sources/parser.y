@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <iostream>
+#include <vector>
 #include "../headers/TableId.hpp"
 #include "../headers/TableSymb.hpp"
 #include "../headers/Symbole.hpp"
@@ -23,6 +24,9 @@ Type *t = new TypeEntier();
 Symbole *var = new SymboleVar(*t);
 Symbole *prog = new SymboleProg();
 
+vector <int> DeclVarMult;
+
+
 extern int yyparse();
 extern int yyerror ( char* );
 extern int yylex ();
@@ -30,6 +34,9 @@ extern int yylex ();
 %}
 
 %union{
+Type * typeIdent;
+char * id;
+int numid;
 }
 
 %token KW_PROGRAM
@@ -90,7 +97,11 @@ extern int yylex ();
 %token OP_PTR
 %token OP_AFFECT
 
-%token TOK_IDENT
+%type <typeIdent> Type
+%type <typeIdent> BaseType
+
+			 
+%token <numid> TOK_IDENT
 %token TOK_INTEGER
 %token TOK_REAL
 %token TOK_BOOLEAN
@@ -112,7 +123,7 @@ extern int yylex ();
 
 %%
 
-Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { table->Ajout(*prog);}
+Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { table->Ajout(prog,0);printf("Prog");}
 				;
 
 ProgramHeader			:	KW_PROGRAM TOK_IDENT
@@ -151,11 +162,18 @@ ListDeclVar			:	ListDeclVar DeclVar
 			 	|	DeclVar
 			 	;
 
-DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{ table->Ajout(*var);}
+DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{
+                                                                            for (unsigned int i=0;i<DeclVarMult.size(); i++){
+                                                                                Symbole *temp = new SymboleVar(*$3);
+                                                                                /*cout<< DeclVarMult.at(i) << endl; */                                                                           /*cout << tableid->getnumTOid(DeclVarMult[i]);*/
+                                                                                table->Ajout(temp, DeclVarMult[i]);
+                                                                            }
+                                                                            DeclVarMult.clear();
+                                                                        }
 			 	;
 
-ListIdent			:	ListIdent SEP_COMMA TOK_IDENT
-			 	|	TOK_IDENT
+ListIdent			:	ListIdent SEP_COMMA TOK_IDENT {DeclVarMult.push_back($3);}
+			 	|	TOK_IDENT {DeclVarMult.push_back($1); }
 			 	;
 
 BlockDeclFunc			:	ListDeclFunc SEP_SCOL
@@ -211,7 +229,7 @@ FuncResult			:	SEP_DOTS BaseType
 			 	;
 
 Type				:	UserType
-			 	|	BaseType
+			 	|	BaseType {$$ = $1;}
 			 	;
 
 UserType			:	EnumType
@@ -221,8 +239,8 @@ UserType			:	EnumType
 			 	|	PointerType
 			 	;
 
-BaseType			:	TOK_IDENT
-			 	|	KW_INTEGER
+BaseType			:	TOK_IDENT {$$=NULL;}
+			 	|	KW_INTEGER {$$ = new TypeEntier();}
 				|	KW_REAL
 				|	KW_BOOLEAN
 				|	KW_CHAR

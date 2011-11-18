@@ -23,8 +23,9 @@ public:
     Symbole(Type t);
     Symbole(const Symbole& orig);
     virtual ~Symbole();
-    virtual void toString(std::ostream &flux) const;
-    friend std::ostream &operator<<(std::ostream &flux, Symbole const& sym);
+    virtual std::string toString();
+
+    //friend std::ostream &operator<<(std::ostream &flux, Symbole const& sym);
 
 };
 

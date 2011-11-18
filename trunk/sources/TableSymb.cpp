@@ -12,22 +12,22 @@ using namespace std;
 TableSymb::TableSymb(void) {
 }
 
-void TableSymb::Ajout(Symbole Sym) {
-    cout << "ajout " << TS.size() << endl;
-    this->TS[TS.size()] = Sym;
+void TableSymb::Ajout(Symbole *Sym, int i) {
+    /*cout << "ajout " << i << endl*/
+    this->TS[i] = Sym;
 }
 void TableSymb::Afficher(TableId Tid)
 {
-//    for(int i=0; i < TS.size(); i++)
-//    {
-//        cout << Tid.getidTOnum(i) <<"\t"<< TS.at(i).toString() <<endl;
-//    }
-    std::map<int, Symbole>::iterator iter;
+    for(int i=0; i < TS.size(); i++)
+    {
+        cout << Tid.getidTOnum(i) <<"\t"<< TS.at(i)->toString()<<endl;
+    }
+    /*std::map<int, Symbole *>::iterator iter;
     for(iter= TS.begin(); iter != TS.end(); ++iter)
     {
         //cout << iter->first << "\t" << iter->second << "\n" << endl;
-         cout << (iter->first) <<"\t"<< (iter->second) << endl;
-    }
+         cout << (iter->first) <<"\t"<< (iter->second)->toString()<< endl;
+    }*/
 }
 TableSymb::~TableSymb(void)
 {
