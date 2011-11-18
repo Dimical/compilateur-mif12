@@ -20,16 +20,7 @@ Symbole::Symbole(const Symbole& orig) {
 Symbole::~Symbole() {
 }
 
-void Symbole::toString(std::ostream &flux) const
+std::string Symbole::toString()
 {
-    flux << "tests";
+    return "tests";
 }
-
-
-std::ostream &operator<<(std::ostream &flux, Symbole const& sym)
-{
-    sym.toString(flux) ; // <- Changement ici
-    return flux;
-}
-
-
