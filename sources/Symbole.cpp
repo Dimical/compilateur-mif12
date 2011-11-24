@@ -10,7 +10,7 @@
 Symbole::Symbole() {
 }
 
-Symbole::Symbole(Type t){
+Symbole::Symbole(Type &t){
     this->T = t;
 }
 

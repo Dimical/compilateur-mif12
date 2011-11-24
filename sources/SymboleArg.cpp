@@ -11,7 +11,7 @@
 SymboleArg::SymboleArg() {
 }
 
-SymboleArg::SymboleArg(Type t, bool b, int pos){
+SymboleArg::SymboleArg(Type *t, bool b, int pos){
     this->T=t;
     this->variable=b;
     this->position=pos;

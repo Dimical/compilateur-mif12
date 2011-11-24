@@ -18,7 +18,7 @@ class SymboleCst : public Symbole
 public:
 
     SymboleCst();
-    SymboleCst(Type t);
+    SymboleCst(Type *t);
     SymboleCst(const SymboleCst& orig);
     virtual ~SymboleCst();
    // std::string toString();

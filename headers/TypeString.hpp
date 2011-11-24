@@ -12,6 +12,7 @@ class TypeString {
 public:
     TypeString();
     TypeString(const TypeString& orig);
+    std::string getClass();
     virtual ~TypeString();
 private:
 

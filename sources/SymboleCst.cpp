@@ -10,7 +10,7 @@
 SymboleCst::SymboleCst(): Symbole() {
 }
 
-SymboleCst::SymboleCst(Type t){
+SymboleCst::SymboleCst(Type *t){
 
 }
 

@@ -20,7 +20,7 @@ void TableSymb::Afficher(TableId Tid)
 {
     for(int i=0; i < TS.size(); i++)
     {
-        cout << Tid.getidTOnum(i) <<"\t"<< TS.at(i)->toString()<<endl;
+        cout << Tid.getidTOnum(i) <<"\t" << TS.at(i)->toString()<<endl;
     }
     /*std::map<int, Symbole *>::iterator iter;
     for(iter= TS.begin(); iter != TS.end(); ++iter)

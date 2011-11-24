@@ -17,5 +17,5 @@ TypeChar::~TypeChar() {
 }
 
 std::string TypeChar::getClass() {
-    return"char";
+    return "char";
 }

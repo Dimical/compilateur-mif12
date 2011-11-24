@@ -17,7 +17,7 @@ class SymboleArg : public Symbole
 public:
     SymboleArg();
     SymboleArg(const SymboleArg& orig);
-    SymboleArg(Type t, bool b, int pos);
+    SymboleArg(Type *t, bool b, int pos);
     virtual ~SymboleArg();
    // std::string toString();
 

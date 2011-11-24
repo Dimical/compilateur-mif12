@@ -12,6 +12,7 @@ class TypeBool {
 public:
     TypeBool();
     TypeBool(const TypeBool& orig);
+    std::string getClass();
     virtual ~TypeBool();
 private:
 
