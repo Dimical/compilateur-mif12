@@ -11,6 +11,7 @@
 #include "../headers/SymboleProg.hpp"
 #include "../headers/Type.hpp"
 #include "../headers/TypeEntier.hpp"
+#include "../headers/TypeChar.hpp"
 
 using namespace std;
 
@@ -21,7 +22,6 @@ TableSymb *table = new TableSymb();
 
 Type *t = new TypeEntier();
 
-Symbole *var = new SymboleVar(*t);
 Symbole *prog = new SymboleProg();
 
 vector <int> DeclVarMult;
@@ -165,7 +165,8 @@ ListDeclVar			:	ListDeclVar DeclVar
 
 DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{
                                                                             for (unsigned int i=0;i<DeclVarMult.size(); i++){
-                                                                                Symbole *temp = new SymboleVar(*$3);
+                                                                              
+                                                                                Symbole *temp = new SymboleVar($3);
                                                                                 /*cout<< DeclVarMult.at(i) << endl;*/                                                                           /*cout << tableid->getnumTOid(DeclVarMult[i]);*/
                                                                                 table->Ajout(temp, DeclVarMult[i]);
                                                                             }
@@ -244,7 +245,7 @@ BaseType			:	TOK_IDENT {$$=NULL;}
 			 	|	KW_INTEGER {$$ = new TypeEntier();}
 				|	KW_REAL
 				|	KW_BOOLEAN
-				|	KW_CHAR
+				|	KW_CHAR {$$ = new TypeChar();}
 				|	KW_STRING
 				;
 

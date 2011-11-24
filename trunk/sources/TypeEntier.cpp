@@ -18,7 +18,7 @@ TypeEntier::TypeEntier(const TypeEntier& orig) {
 TypeEntier::~TypeEntier() {
 }
 
-std::string Type::getClass() {
+std::string TypeEntier::getClass() {
     return"integer";
 }
 
@@ -28,4 +28,3 @@ std::string Type::getClass() {
 ////        return true;
 //    return false;
 //}
-

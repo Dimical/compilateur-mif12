@@ -15,12 +15,12 @@
 class Symbole{
 
 protected:
-    Type T;
+    Type *T;
     
 public:
     // classe abstraite
     Symbole();
-    Symbole(Type t);
+    Symbole(Type *t);
     Symbole(const Symbole& orig);
     virtual ~Symbole();
     virtual std::string toString();

@@ -16,7 +16,7 @@ public:
     TypeChar();
     TypeChar(const TypeChar& orig);
     ~TypeChar();
-        std::string TypeChar::getClass();
+    std::string getClass();
     bool operator ==(Type const& T1);
 private:
 

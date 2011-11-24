@@ -12,6 +12,7 @@ class TypeReel {
 public:
     TypeReel();
     TypeReel(const TypeReel& orig);
+    std::string getClass();
     virtual ~TypeReel();
 private:
 

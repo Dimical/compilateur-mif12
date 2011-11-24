@@ -21,7 +21,7 @@ public:
     SymboleVar(const SymboleVar& orig);
     virtual ~SymboleVar();
     std::string toString();
-    SymboleVar(Type t);
+    SymboleVar(Type *t);
 private:
     
     // type, valeur, code 3@

@@ -10,7 +10,7 @@
 SymboleVar::SymboleVar(): Symbole() {
 }
 
-SymboleVar::SymboleVar(Type t) {
+SymboleVar::SymboleVar(Type *t) {
     this->T=t;
 }
 
@@ -21,5 +21,5 @@ SymboleVar::~SymboleVar() {
 }
 
 std::string SymboleVar::toString(){
-    return "Variable\t[type:"+this->T.getClass()+"]";
+    return "Variable\t[type:"+this->T->getClass()+"]";
 }
