@@ -18,7 +18,7 @@ public:
     TypeEntier(const TypeEntier& orig);
     ~TypeEntier();
     std::string getClass();
-    bool operator ==(Type const& T1);
+    //bool operator ==(Type const& T1);
 private:
     
 };

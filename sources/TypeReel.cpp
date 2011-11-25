@@ -15,3 +15,7 @@ TypeReel::TypeReel(const TypeReel& orig) {
 
 TypeReel::~TypeReel() {
 }
+
+std::string TypeReel::getClass() {
+    return"real";
+}

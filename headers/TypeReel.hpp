@@ -8,12 +8,14 @@
 #ifndef TYPEREEL_HPP
 #define	TYPEREEL_HPP
 
-class TypeReel {
+#include "Type.hpp"
+
+class TypeReel : public Type{
 public:
     TypeReel();
     TypeReel(const TypeReel& orig);
     std::string getClass();
-    virtual ~TypeReel();
+    ~TypeReel();
 private:
 
 };

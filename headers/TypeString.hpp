@@ -8,12 +8,14 @@
 #ifndef TYPESTRING_HPP
 #define	TYPESTRING_HPP
 
-class TypeString {
+#include "Type.hpp"
+
+class TypeString : public Type{
 public:
     TypeString();
     TypeString(const TypeString& orig);
     std::string getClass();
-    virtual ~TypeString();
+    ~TypeString();
 private:
 
 };
