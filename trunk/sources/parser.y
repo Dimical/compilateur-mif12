@@ -12,7 +12,9 @@
 #include "../headers/Type.hpp"
 #include "../headers/TypeEntier.hpp"
 #include "../headers/TypeChar.hpp"
-
+#include "../headers/TypeReel.hpp"
+#include "../headers/TypeBool.hpp"
+#include "../headers/TypeString.hpp"
 using namespace std;
 
 extern FILE* yyin;
@@ -243,10 +245,10 @@ UserType			:	EnumType
 
 BaseType			:	TOK_IDENT {$$=NULL;}
 			 	|	KW_INTEGER {$$ = new TypeEntier();}
-				|	KW_REAL
-				|	KW_BOOLEAN
+				|	KW_REAL {$$ = new TypeReel();}
+				|	KW_BOOLEAN {$$ = new TypeBool();}
 				|	KW_CHAR {$$ = new TypeChar();}
-				|	KW_STRING
+				|	KW_STRING {$$ = new TypeString();}
 				;
 
 EnumType			:	SEP_PO ListEnumValue SEP_PF

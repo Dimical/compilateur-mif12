@@ -16,3 +16,6 @@ TypeString::TypeString(const TypeString& orig) {
 TypeString::~TypeString() {
 }
 
+std::string TypeString::getClass() {
+    return"string";
+}

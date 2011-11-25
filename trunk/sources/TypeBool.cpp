@@ -16,3 +16,6 @@ TypeBool::TypeBool(const TypeBool& orig) {
 TypeBool::~TypeBool() {
 }
 
+std::string TypeBool::getClass() {
+    return"boolean";
+}

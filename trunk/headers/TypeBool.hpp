@@ -8,12 +8,14 @@
 #ifndef TYPEBOOL_HPP
 #define	TYPEBOOL_HPP
 
-class TypeBool {
+#include "Type.hpp"
+
+class TypeBool : public Type{
 public:
     TypeBool();
     TypeBool(const TypeBool& orig);
     std::string getClass();
-    virtual ~TypeBool();
+    ~TypeBool();
 private:
 
 };
