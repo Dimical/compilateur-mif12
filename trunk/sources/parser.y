@@ -307,7 +307,7 @@ Instr				:	KW_WHILE Expression KW_DO Instr
 			 	|	KW_FOR TOK_IDENT OP_AFFECT Expression ForDirection Expression KW_DO Instr
 			 	|	KW_IF Expression KW_THEN Instr %prec KW_IFX
 			 	|	KW_IF Expression KW_THEN Instr KW_ELSE Instr
-			 	|	VarExpr OP_AFFECT Expression
+			 	|	LeftExpr OP_AFFECT Expression
 			 	|	Call
 			 	|	BlockCode
 			 	;
@@ -363,6 +363,11 @@ VarExpr				:	TOK_IDENT
 				|	VarExpr OP_PTR
 				;
 
+LeftExpr                        :       TOK_IDENT
+                                |       LeftExpr SEP_DOT TOK_IDENT
+                                |       LeftExpr OP_PTR
+                                |       LeftExpr SEP_CO ListIndices SEP_CF
+                                ;
 Call			 	:	TOK_IDENT Parameters
 				;
 
