@@ -27,7 +27,7 @@ public:
 
     //friend std::ostream &operator<<(std::ostream &flux, Symbole const& sym);
 
-    Type * getType();
+    virtual Type * getType()=0;
 
 };
 

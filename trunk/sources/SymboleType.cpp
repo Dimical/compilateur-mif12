@@ -16,6 +16,11 @@ SymboleType::SymboleType(const SymboleType& orig) {
 SymboleType::~SymboleType() {
 }
 
+Type * SymboleType::getType()
+{
+    return this->T;
+}
+
 //std::string toString(){
 //    return("");
 //}

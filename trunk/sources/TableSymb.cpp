@@ -9,30 +9,39 @@
 
 using namespace std;
 
-TableSymb::TableSymb(void) {
+TableSymb::TableSymb(string n, TableSymb* t) {
+    this->nom = n;
+    this->tSymbMere = t;
 }
 
 void TableSymb::Ajout(Symbole *Sym, int i) {
-    /*cout << "ajout " << i << endl*/
     this->TS[i] = Sym;
 }
 void TableSymb::Afficher(TableId Tid)
 {
-    for(int i=0; i < TS.size(); i++)
-    {
-        cout << Tid.getidTOnum(i) <<"\t" << TS.at(i)->toString()<<endl;
+    string tSymM;
+    if (this->tSymbMere == NULL)
+        tSymM = "None";
+    else
+        tSymM = this->tSymbMere->getName();
+    
+    cout << "+++SymbolTable(" << this->getName() << ": "<< tSymM << ")" << endl;
+    for (map<int, Symbole*>::iterator it = TS.begin(); it != TS.end(); ++it){
+        cout << Tid.getidTOnum(it->first) <<"\t" << TS.at(it->first)->toString()<<endl;
     }
-    /*std::map<int, Symbole *>::iterator iter;
-    for(iter= TS.begin(); iter != TS.end(); ++iter)
-    {
-        //cout << iter->first << "\t" << iter->second << "\n" << endl;
-         cout << (iter->first) <<"\t"<< (iter->second)->toString()<< endl;
-    }*/
+
+    cout << "---SymbolTable(" << this->getName() << ": "<< tSymM << ")" << endl;
+
 }
 TableSymb::~TableSymb(void)
 {
 
 }
+
+string TableSymb::getName(void){
+    return nom;
+}
+
 Symbole *TableSymb::getSymbole(int id)
 {
     return this->TS[id];

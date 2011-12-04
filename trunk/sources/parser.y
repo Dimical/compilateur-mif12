@@ -5,12 +5,16 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <stack>
 #include <string>
 #include "../headers/TableId.hpp"
 #include "../headers/TableSymb.hpp"
 #include "../headers/Symbole.hpp"
 #include "../headers/SymboleVar.hpp"
+#include "../headers/SymboleArg.hpp"
 #include "../headers/SymboleProg.hpp"
+#include "../headers/SymboleProcedure.hpp"
+#include "../headers/SymboleFonction.hpp"
 #include "../headers/SymboleTemp.hpp"
 #include "../headers/Type.hpp"
 #include "../headers/TypeEntier.hpp"
@@ -25,14 +29,18 @@
 
 using namespace std;
 
+
 extern FILE* yyin;
 
 extern TableId *tableid;
-TableSymb *table = new TableSymb();
+TableSymb *table;
+
+int arite = 0; /* Pour remonter l'arite des fonctions et procedures */
+Type* typeFuncGlobal; /* Pour remonter le type de retour d'une fonction */
 
 Type *t = new TypeEntier();
 
-Symbole *prog = new SymboleProg();
+
 
 //-----------
 
@@ -41,12 +49,25 @@ int tempoCourant= 0; // notre compteur de temporaire
 
 //------------------
 
-vector <int> DeclVarMult;
 
-vector <char *> Code3adresses; // pas besoin
+
+
+
+
+
+
+vector <int> DeclVarMult; /*Pour les declaration multiples de variables */
+vector <char *> Code3adresses; /* Pour le 3adresses pas besoin*/
+vector <TableSymb*> tableSAffichage; /* Les tables de symboles imbriquees */
+
+stack<TableSymb*> pushedSymbolTables; /* la pile pour gérer plusieurs tables de symboles */
+TableSymb * tableTemp; /* */
+
+
 
 // notre conteneur (passer à un conteneur generale)
 ConteneurCode* ContenCodeCourant = new ConteneurCode();
+
 
 
 extern int yyparse();
@@ -139,6 +160,14 @@ Operande* operande;
 %token <valuebool> TOK_BOOLEAN
 %token <valuestring> TOK_STRING
 
+%type <numid> ProcIdent
+%type <numid> ProcHeader
+%type <numid> ProcDecl
+%type <numid> FuncIdent
+%type <typeIdent> FuncResult
+%type <numid> FuncHeader
+%type <numid> FuncDecl
+
 %start Program
 
 %nonassoc OP_EQ OP_NEQ OP_GT OP_LT OP_GTE OP_LTE
@@ -166,24 +195,29 @@ Operande* operande;
 
 %%
 
-Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { table->Ajout(prog,0);printf("Prog");}
+Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { cout<<"DEBUG Program"<<endl; table->Ajout(new SymboleProg(),0);}
 				;
 
-ProgramHeader			:	KW_PROGRAM TOK_IDENT
+ProgramHeader			:	KW_PROGRAM TOK_IDENT    {   
+                                                                    cout<<"DEBUG ProgramHeader"<<endl;
+                                                                    table= new TableSymb(tableid->getidTOnum($2), NULL);
+                                                                    tableSAffichage.push_back(table);
+                                                                    pushedSymbolTables.push(table);
+                                                                }
 				;
 
-Block				:	BlockDeclConst BlockDeclType BlockDeclVar BlockDeclFunc BlockCode
+Block				:	 {cout<<"DEBUG Block"<<endl;}   BlockDeclConst BlockDeclType BlockDeclVar BlockDeclFunc BlockCode
 				;
 
-BlockDeclConst			:	KW_CONST ListDeclConst
+BlockDeclConst			:	{cout<<"DEBUG BlockDeclConst"<<endl;}   KW_CONST ListDeclConst
 			 	|
 			 	;
 
-ListDeclConst			:	ListDeclConst DeclConst
-			 	|	DeclConst
+ListDeclConst			:	{cout<<"DEBUG ListDeclConst"<<endl;}    ListDeclConst DeclConst
+			 	|	{cout<<"DEBUG ListDeclConst"<<endl;}    DeclConst
 			 	;
 
-DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL {cout << "il faut ajouter une constante a la table des symboles" << endl;}
+DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL {   cout<<"DEBUG DeclConst"<<endl;/*il faut ajouter une constante a la table des symboles*/}
 			 	;
 
 BlockDeclType			:	KW_TYPE ListDeclType
@@ -194,7 +228,7 @@ ListDeclType			:	ListDeclType DeclType
 			 	|	DeclType
 			 	;
 
-DeclType			:	TOK_IDENT OP_EQ Type SEP_SCOL {cout << "il faut ajouter un type a la table des symboles" << endl;}
+DeclType			:	TOK_IDENT OP_EQ Type SEP_SCOL {/*il faut ajouter un type a la table des symboles*/}
 			 	;
 
 BlockDeclVar			:	KW_VAR ListDeclVar
@@ -210,16 +244,18 @@ DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{
 
                                                                                 Symbole *temp = new SymboleVar($3);
                                                                                 table->Ajout(temp, DeclVarMult[i]);
-                                                                            }
-                                                                            DeclVarMult.clear();
+                                                                          }
+                                                                          DeclVarMult.clear();
                                                                         }
 			 	;
 
-ListIdent			:	ListIdent SEP_COMMA TOK_IDENT {DeclVarMult.push_back($3);}
-			 	|	TOK_IDENT {DeclVarMult.push_back($1); }
+ListIdent			:	ListIdent SEP_COMMA TOK_IDENT { DeclVarMult.push_back($3);
+                                                                        arite++;}
+			 	|	TOK_IDENT { DeclVarMult.push_back($1);
+                                                    arite++;}
 			 	;
 
-BlockDeclFunc			:	ListDeclFunc SEP_SCOL
+BlockDeclFunc			:	{cout<<"DEBUG BlockDeclFunc"<<endl;}   ListDeclFunc SEP_SCOL
 			 	|
 			 	;
 
@@ -227,21 +263,52 @@ ListDeclFunc			:	ListDeclFunc SEP_SCOL DeclFunc
 			 	|	DeclFunc
 			 	;
 
-DeclFunc			:	ProcDecl
-			 	|	FuncDecl
+DeclFunc			:	{arite=0;}  ProcDecl    {
+                                                        if (!pushedSymbolTables.empty())
+                                                        {
+                                                                /*table = pushedSymbolTables.top();*/
+                                                                pushedSymbolTables.pop();
+                                                                table = pushedSymbolTables.top();
+                                                                table->Ajout( new SymboleProcedure(arite),$2);                                                              
+                                                       }
+                                                        else
+                                                                cout << "no symbol table to pop" << endl;
+                                                    }
+			 	|	{arite=0;}  FuncDecl    {
+                                                        if (!pushedSymbolTables.empty())
+                                                        {
+                                                                pushedSymbolTables.pop();
+                                                                table = pushedSymbolTables.top();
+                                                                /////ICI truite
+                                                                table->Ajout( new SymboleFonction(typeFuncGlobal,arite-1),$2);
+
+                                                       }
+                                                        else
+                                                                cout << "no symbol table to pop" << endl;
+                                                    }
 			 	;
 
-ProcDecl			:	ProcHeader SEP_SCOL Block
+ProcDecl			:	ProcHeader SEP_SCOL Block {$$ = $1;}
 			 	;
 
-ProcHeader			:	ProcIdent
-			 	|	ProcIdent FormalArgs
+ProcHeader			:	ProcIdent   {
+                                                        /*on remonte l'identifiant*/
+                                                        $$ = $1;
+                                                    }
+			 	|	ProcIdent   FormalArgs  {
+                                                                    /*on remonte l'identifiant*/
+                                                                    $$ = $1;
+                                                                }
 			 	;
 
-ProcIdent			:	KW_PROC TOK_IDENT
+ProcIdent			:	KW_PROC TOK_IDENT   {
+                                                                $$=$2;
+                                                                table = new TableSymb(tableid->getidTOnum($2), pushedSymbolTables.top());tableSAffichage.push_back(table);
+                                                                pushedSymbolTables.push(table);
+                                                            }
 			 	;
 
-FormalArgs			:	SEP_PO ListFormalArgs SEP_PF
+FormalArgs			:	SEP_PO ListFormalArgs SEP_PF {/*cout << "formal arg arite = "<<arite<<endl;*/}
 			 	;
 
 ListFormalArgs			:	ListFormalArgs SEP_SCOL FormalArg
@@ -252,23 +319,40 @@ FormalArg			:	ValFormalArg
 			 	|	VarFormalArg
 			 	;
 
-ValFormalArg			:	ListIdent SEP_DOTS BaseType
+ValFormalArg			:	ListIdent SEP_DOTS BaseType     {
+                                                                            for (unsigned int i=0;i<DeclVarMult.size(); i++){
+                                                                                Symbole *temp = new SymboleArg($3, true, 1);
+                                                                                table->Ajout(temp, DeclVarMult[i]);
+                                                                            }
+                                                                            DeclVarMult.clear();
+                                                                        }
 			 	;
 
 VarFormalArg			:	KW_VAR ListIdent SEP_DOTS BaseType
 			 	;
 
-FuncDecl			:	FuncHeader SEP_SCOL Block
+FuncDecl			:	FuncHeader SEP_SCOL Block   {
+                                                                        $$=$1;
+                                                                    }
 			 	;
 
-FuncHeader			:	FuncIdent FuncResult
-			 	|	FuncIdent FormalArgs FuncResult
+FuncHeader			:	FuncIdent FuncResult    {/* on remonte l'identifiant et on met le type en variable globale */
+                                                                    typeFuncGlobal = $2;
+                                                                    $$ = $1;
+                                                                }
+			 	|	FuncIdent FormalArgs FuncResult {/* on remonte l'identifiant et on met le type en variable globale */
+                                                        typeFuncGlobal = $3;
+                                                                    $$ = $1;
+                                                    }
 			 	;
 
-FuncIdent			:	KW_FUNC TOK_IDENT
+FuncIdent			:	KW_FUNC TOK_IDENT   { $$=$2;                                                                
+                                                                table = new TableSymb(tableid->getidTOnum($2), pushedSymbolTables.top());tableSAffichage.push_back(table);
+                                                                pushedSymbolTables.push(table);
+                                                            }
 			 	;
 
-FuncResult			:	SEP_DOTS BaseType
+FuncResult			:	SEP_DOTS BaseType {$$ = $2}
 			 	;
 
 Type				:	UserType
@@ -333,7 +417,7 @@ RecordField			:	ListIdent SEP_DOTS Type
 PointerType			:	OP_PTR Type
 			 	;
 
-BlockCode			:	KW_BEGIN ListInstr KW_END {cout << "jai un blok" << endl;}
+BlockCode			:	KW_BEGIN ListInstr KW_END {/*cout << "jai un blok" << endl;*/}
 				|	KW_BEGIN ListInstr SEP_SCOL KW_END
 				|	KW_BEGIN KW_END
 			 	;
@@ -350,6 +434,7 @@ Instr				:	KW_WHILE Expression KW_DO Instr
 			 	|	VarExpr OP_AFFECT Expression {
                                         Instruction* Instr= new Instruction(/*etiquette1,*/ "CPY", $1,$3, NULL, tableid);
                                         ContenCodeCourant->ajouterInstruct(Instr);
+                                        /////////ici ici ici ////////////////////
                                 }
 			 	|	Call
 			 	|	BlockCode
@@ -378,19 +463,24 @@ MathExpr			:	Expression OP_ADD Expression
                                         std::stringstream out;
                                         out<<tempoCourant;
                                         tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
-                                        table->Ajout(new SymboleTemp(), table->getNbrsym()+1);
+                                        cout <<endl << "TAILLE DE LA TABLE DES SYMBOLES " << table->getNbrsym() <<endl;
+                                        table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));/*4*//*table->getNbrsym()*/
                                         tempoCourant ++;
+                                        
 
-                                        operandeTempo = new Operande(table->getNbrsym(), new Valeur(), false);
+                                        operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
 
 
-                                        // on teste si nos expressions sont correctes
+
                                             if(($1 != NULL) && ($3 !=NULL))
                                             {
                                                 //Etiquette* etiquette1= new Etiquette();
 
                                                 // on créer une nouvelle instruction
+                                        // on teste si nos expressions sont correctes
+
                                                 Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "ADD", operandeTempo, $1, $3, tableid);
+                                        // on teste si nos expressions sont correctes
 
                                                 // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
 
@@ -431,7 +521,7 @@ BoolExpr			:	Expression KW_AND Expression
 			 	;
 
 AtomExpr			:	SEP_PO Expression SEP_PF
-			 	|	TOK_INTEGER { // -1 qui correspond au fait que l'entier n'a pas de id sur la TI
+			 	|	TOK_INTEGER {// -1 qui correspond au fait que l'entier n'a pas de id sur la TI
                                                         $$ = new Operande(-1 , new Valeur(new TypeEntier, $1), true);
                                                     }
 			 	|	TOK_REAL
@@ -440,8 +530,17 @@ AtomExpr			:	SEP_PO Expression SEP_PF
 			 	|	TOK_STRING
 			 	;
 
-VarExpr				:	TOK_IDENT { // on construit notre operande sans valeur 
-                                                    $$ = new Operande($1 , new Valeur(table->getSymbole($1)->getType()), false);
+VarExpr				:	TOK_IDENT { // on construit notre operande sans valeur
+                                                    cout<<"DEBUG VarExpr DEBUT"<<endl;
+                                                    cout<<"DEBUG1 "<<table->getSymbole($1)<<endl;
+                                                    cout<<"TOK_IDENT = "<< $1 <<endl;
+                                                    cout<<"DEBUG2 "<< endl;
+                                                    if(table->getSymbole($1)!=NULL){
+                                                        cout<<"DEBUG3 "<<   table->getSymbole($1)->getType()    <<endl;
+                                                        $$ = new Operande($1 , new Valeur(table->getSymbole($1)->getType()), false);
+                                                        cout<<"DEBUG VarExpr FIN"<<endl;
+                                                    }
+                                                    else{cout<<"DEBUG else "<< endl;}
                                                   }
 				|	VarExpr SEP_CO ListIndices SEP_CF
 				|	VarExpr SEP_DOT TOK_IDENT %prec OP_DOT
@@ -472,7 +571,10 @@ int main ( int argc, char** argv )
 	tableid=new TableId();
 	yyparse ();
 	tableid->Affichage();
-	table->Afficher(*tableid);
+        for (unsigned int i=0;i<tableSAffichage.size(); i++){
+            tableSAffichage[i]->Afficher(*tableid);
+        }
+	//table->Afficher(*tableid);
         ContenCodeCourant->affichage();
         fclose ( yyin );
 }

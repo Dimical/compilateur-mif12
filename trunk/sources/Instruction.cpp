@@ -6,7 +6,7 @@
  */
 
 #include "../headers/Instruction.hpp"
-
+using namespace std;
 
 
 Instruction::Instruction() {
@@ -19,6 +19,7 @@ Instruction::~Instruction() {
 }
 Instruction::Instruction(/*Etiquette* Et,*/ std::string Opera, Operande *Resultat, Operande *Arg1, Operande *Arg2, TableId *TI){
     //this->Eti= new Etiquette(Et);
+                                        // on teste si nos expressions sont correctes
 
     this->Res= Resultat;
     this->Operan1= Arg1;
@@ -31,6 +32,8 @@ Instruction::Instruction(/*Etiquette* Et,*/ std::string Opera, Operande *Resulta
         //if(Et != NULL)
         //{
             this->Ligne3adresses = /*Et->toString() +*/ this->CodeInstr->Add(TI, this->Res, this->Operan1, this->Operan2);
+                                                    // on teste si nos expressions sont correctes
+
         //}
     }
     else if(this->Operateur == "SUB")

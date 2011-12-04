@@ -22,6 +22,7 @@ public:
     virtual ~SymboleVar();
     std::string toString();
     SymboleVar(Type *t);
+    Type * getType();
 private:
     
     // type, valeur, code 3@

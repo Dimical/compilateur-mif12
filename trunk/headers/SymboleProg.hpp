@@ -18,6 +18,7 @@ public:
     SymboleProg(const SymboleProg& orig);
     virtual ~SymboleProg();
     std::string toString();
+    Type * getType();
 
 private:
 

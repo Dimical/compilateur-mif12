@@ -13,6 +13,7 @@
 #include "../headers/Operande.hpp"
 #include "../include/parser.hpp"
 #include "../headers/TableId.hpp"
+#include "../headers/SharedStructures.hpp"
 
 extern int row, column;
 
