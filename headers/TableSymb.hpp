@@ -25,7 +25,10 @@ public:
      TableSymb(const TableSymb& orig);
     ~TableSymb(void);
 
+    Symbole * getSymbole(int id);
     void Test();
+
+    int getNbrsym();
 
     std::map<int, Symbole *> TS; // Notre map
 private:

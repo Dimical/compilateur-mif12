@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Operande.hpp
  * Author: bilal
  *
@@ -14,9 +14,13 @@
 class Operande {
 public:
     Operande();
-    Operande(int numeroId);
+    Operande(int numeroId, Valeur *valeur, bool Calculee);
     Operande(const Operande& orig);
     virtual ~Operande();
+    int getId();
+    Valeur * getValeur();
+
+    bool EstCalculee();
 
 
 private:
@@ -24,10 +28,11 @@ private:
     int numeroIdentificateur; // notre identifiant de la table identificateur
     Valeur *val;// notre valeur correspondante
 
+    bool Calculee;
+
 
 
 
 };
 
 #endif	/* OPERANDE_HPP */
-

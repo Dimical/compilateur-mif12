@@ -8,7 +8,9 @@
  
 #include <cstdio>
 #include <cmath>
+#include <string>
 #include "../headers/Type.hpp"
+#include "../headers/Operande.hpp"
 #include "../include/parser.hpp"
 #include "../headers/TableId.hpp"
 
@@ -123,12 +125,12 @@ CHIFFRES [0-9]+
 "**"								column += yyleng; return OP_EXP;
 "^"								column += yyleng; return OP_PTR;
 
-{T}{R}{U}{E}					column += yyleng; return TOK_BOOLEAN;
-{F}{A}{L}{S}{E}					column += yyleng; return TOK_BOOLEAN;
+{T}{R}{U}{E}					column += yyleng; yylval.valuebool = true ; return TOK_BOOLEAN;
+{F}{A}{L}{S}{E}					column += yyleng; yylval.valuebool = true ; return TOK_BOOLEAN;
 [a-zA-Z]([a-zA-Z0-9])*				column += yyleng; yylval.numid = tableid->Ajout(yytext); return TOK_IDENT;
-'({NQUOTE}|'')+'					column += yyleng; return TOK_STRING;
-{CHIFFRES}						column += yyleng; return TOK_INTEGER;
-{CHIFFRES}"."{CHIFFRES}			column += yyleng; return TOK_REAL;
+'({NQUOTE}|'')+'					column += yyleng; yylval.valuestring = strndup(yytext, yyleng); return TOK_STRING;
+{CHIFFRES}						column += yyleng; yylval.valueint = atoi(yytext) ; return TOK_INTEGER;
+{CHIFFRES}"."{CHIFFRES}			column += yyleng; yylval.valuefloat = atof(yytext) ; return TOK_REAL;
 
 ":"								column += yyleng; return SEP_DOTS;
 ";"								column += yyleng; return SEP_SCOL;

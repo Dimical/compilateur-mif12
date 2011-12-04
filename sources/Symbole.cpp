@@ -24,3 +24,8 @@ std::string Symbole::toString()
 {
     return "tests";
 }
+
+Type * Symbole::getType()
+{
+    return this->T;
+}

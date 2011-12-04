@@ -33,4 +33,11 @@ TableSymb::~TableSymb(void)
 {
 
 }
-
+Symbole *TableSymb::getSymbole(int id)
+{
+    return this->TS[id];
+}
+int TableSymb::getNbrsym()
+{
+    return this->TS.size();
+}
