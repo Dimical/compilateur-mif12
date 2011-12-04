@@ -8,10 +8,12 @@
 #ifndef CONTENEURCODE_H
 #define	CONTENEURCODE_H
 
+#include "Instruction.hpp"
+
 class ConteneurCode {
 public:
     ConteneurCode();
-    ConteneurCode(const ConteneurCode& orig);
+    ConteneurCode(const ConteneurCode& orig);// copie de conteneur
     ~ConteneurCode();
 
     void ajouterInstruct(Instruction* instr);

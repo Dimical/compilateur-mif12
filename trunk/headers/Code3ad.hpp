@@ -1,7 +1,9 @@
 #ifndef __CODE_3_AD__
 #define __CODE_3_AD__
 
-#include "version.hpp"
+#include "Operande.hpp"
+#include "Instruction.hpp"
+#include "ConteneurCode.hpp"
 
 typedef enum {
   OPCODE_NONE = 0, /*        nop (ne rien faire) */
@@ -20,8 +22,8 @@ typedef enum {
   OPCODE_GE ,      /*        x := y >= z         */
   OPCODE_EQ ,      /*        x := y == z         */
   OPCODE_NEQ ,     /*        x := y != z         */
-  OPCODE_JMP ,     /*        aller ˆ x           */
-  OPCODE_JMPC ,    /*        si x aller ˆ y      */
+  OPCODE_JMP ,     /*        aller ï¿½ x           */
+  OPCODE_JMPC ,    /*        si x aller ï¿½ y      */
   OPCODE_ART ,     /*        x := y [ z ]        */
   OPCODE_ALT ,     /*        x [ y ] := z        */
   OPCODE_PTR ,     /*        x := & y            */

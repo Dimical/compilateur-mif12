@@ -27,6 +27,8 @@ public:
 
     //friend std::ostream &operator<<(std::ostream &flux, Symbole const& sym);
 
+    Type * getType();
+
 };
 
 #endif	/* SYMBOLE_HPP */

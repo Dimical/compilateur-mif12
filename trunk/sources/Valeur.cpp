@@ -7,12 +7,18 @@
 
 #include "../headers/Valeur.hpp"
 
+using namespace std;
+
+Valeur::Valeur(){
+}
 Valeur::Valeur(Type* t){
     this->type= t;
 }
 Valeur::Valeur(Type* t, int i){
     this->type= t;
     this->i= i;
+
+    cout<<endl <<" La valeur de la valeur  est : " << i<<endl;
 }
 Valeur::Valeur(Type* t, float f){
     this->type= t;
@@ -31,18 +37,18 @@ Type* Valeur::getT(){
 }
 
 bool Valeur::getValeurBool(){
-    if(this->type.getClass() == "boolean")
+    //if(this->type.getClass() == "boolean")
         return b;
 }
 int Valeur::getValeurInteger(){
-    if(this->type.getClass() == "integer")
+    //if(this->type.getClass() == "integer")
         return i;
 }
 float Valeur::getValeurFloat(){
-    if(this->type.getClass() == "float")
+    //if(this->type.getClass() == "float")
         return f;
 }
 std::string* Valeur::getValeurString(){
-    if(this->type.getClass() == "string")
+    //if(this->type.getClass() == "string")
         return s;
 }

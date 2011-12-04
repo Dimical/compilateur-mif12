@@ -3,18 +3,26 @@
 #include <cstddef>
 #include <cstdio>
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <string>
 #include "../headers/TableId.hpp"
 #include "../headers/TableSymb.hpp"
 #include "../headers/Symbole.hpp"
 #include "../headers/SymboleVar.hpp"
 #include "../headers/SymboleProg.hpp"
+#include "../headers/SymboleTemp.hpp"
 #include "../headers/Type.hpp"
 #include "../headers/TypeEntier.hpp"
 #include "../headers/TypeChar.hpp"
 #include "../headers/TypeReel.hpp"
 #include "../headers/TypeBool.hpp"
 #include "../headers/TypeString.hpp"
+#include "../headers/ConteneurCode.hpp"
+#include "../headers/Instruction.hpp"
+#include "../headers/Operande.hpp"
+#include "../headers/Valeur.hpp"
+
 using namespace std;
 
 extern FILE* yyin;
@@ -26,8 +34,19 @@ Type *t = new TypeEntier();
 
 Symbole *prog = new SymboleProg();
 
+//-----------
+
+int tempoCourant= 0; // notre compteur de temporaire
+ Operande* operandeTempo;
+
+//------------------
+
 vector <int> DeclVarMult;
-vector <char *> Code3adresses;
+
+vector <char *> Code3adresses; // pas besoin
+
+// notre conteneur (passer à un conteneur generale)
+ConteneurCode* ContenCodeCourant = new ConteneurCode();
 
 
 extern int yyparse();
@@ -37,9 +56,19 @@ extern int yylex ();
 %}
 
 %union{
-Type * typeIdent;
-char * id;
+Type* typeIdent;
+char* id;
 int numid;
+
+int valueint;
+float valuefloat;
+bool valuebool;
+char *valuestring;
+
+
+
+Type* type;
+Operande* operande;
 }
 
 %token KW_PROGRAM
@@ -103,12 +132,12 @@ int numid;
 %type <typeIdent> Type
 %type <typeIdent> BaseType
 
-			 
+
 %token <numid> TOK_IDENT
-%token TOK_INTEGER
-%token TOK_REAL
-%token TOK_BOOLEAN
-%token TOK_STRING
+%token <valueint> TOK_INTEGER
+%token <valuefloat> TOK_REAL
+%token <valuebool> TOK_BOOLEAN
+%token <valuestring> TOK_STRING
 
 %start Program
 
@@ -123,6 +152,17 @@ int numid;
 
 %nonassoc KW_IFX
 %nonassoc KW_ELSE
+
+%type<operande> AtomExpr
+%type<operande> VarExpr
+%type<operande> Expression
+%type<operande> MathExpr
+%type<operande> CompExpr
+%type<operande> BoolExpr
+
+
+
+
 
 %%
 
@@ -167,9 +207,8 @@ ListDeclVar			:	ListDeclVar DeclVar
 
 DeclVar				:	ListIdent SEP_DOTS Type SEP_SCOL{
                                                                             for (unsigned int i=0;i<DeclVarMult.size(); i++){
-                                                                              
+
                                                                                 Symbole *temp = new SymboleVar($3);
-                                                                                /*cout<< DeclVarMult.at(i) << endl;*/                                                                           /*cout << tableid->getnumTOid(DeclVarMult[i]);*/
                                                                                 table->Ajout(temp, DeclVarMult[i]);
                                                                             }
                                                                             DeclVarMult.clear();
@@ -233,7 +272,8 @@ FuncResult			:	SEP_DOTS BaseType
 			 	;
 
 Type				:	UserType
-			 	|	BaseType {$$ = $1;}
+			 	|	BaseType {$$ = $1;
+                                            }
 			 	;
 
 UserType			:	EnumType
@@ -307,7 +347,10 @@ Instr				:	KW_WHILE Expression KW_DO Instr
 			 	|	KW_FOR TOK_IDENT OP_AFFECT Expression ForDirection Expression KW_DO Instr
 			 	|	KW_IF Expression KW_THEN Instr %prec KW_IFX
 			 	|	KW_IF Expression KW_THEN Instr KW_ELSE Instr
-			 	|	LeftExpr OP_AFFECT Expression
+			 	|	VarExpr OP_AFFECT Expression {
+                                        Instruction* Instr= new Instruction(/*etiquette1,*/ "CPY", $1,$3, NULL, tableid);
+                                        ContenCodeCourant->ajouterInstruct(Instr);
+                                }
 			 	|	Call
 			 	|	BlockCode
 			 	;
@@ -316,7 +359,10 @@ ForDirection			:	KW_TO
 			 	|	KW_DOWNTO
 			 	;
 
-Expression			:	MathExpr
+Expression			:	MathExpr {
+                                                   
+
+                                                       }
 			 	|	CompExpr
 			 	|	BoolExpr
 			 	|	AtomExpr
@@ -325,6 +371,41 @@ Expression			:	MathExpr
 			 	;
 
 MathExpr			:	Expression OP_ADD Expression
+                                        {
+
+                                        // on va s'occuper de nos temporaire ici
+                                        // AJoute d'une temporaire dans les tables
+                                        std::stringstream out;
+                                        out<<tempoCourant;
+                                        tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                        table->Ajout(new SymboleTemp(), table->getNbrsym()+1);
+                                        tempoCourant ++;
+
+                                        operandeTempo = new Operande(table->getNbrsym(), new Valeur(), false);
+
+
+                                        // on teste si nos expressions sont correctes
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+
+                                                // on créer une nouvelle instruction
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "ADD", operandeTempo, $1, $3, tableid);
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+
+                                                //string t1= $1;
+                                                //cout<<"Test : " << t1<<endl;
+                                            }
+
+
+
+                                        }
 			 	|	Expression OP_SUB Expression
 			 	|	Expression OP_MUL Expression
 			 	|	Expression OP_SLASH Expression
@@ -350,24 +431,23 @@ BoolExpr			:	Expression KW_AND Expression
 			 	;
 
 AtomExpr			:	SEP_PO Expression SEP_PF
-			 	|	TOK_INTEGER
+			 	|	TOK_INTEGER { // -1 qui correspond au fait que l'entier n'a pas de id sur la TI
+                                                        $$ = new Operande(-1 , new Valeur(new TypeEntier, $1), true);
+                                                    }
 			 	|	TOK_REAL
 			 	|	TOK_BOOLEAN
 			 	|	KW_NIL
 			 	|	TOK_STRING
 			 	;
 
-VarExpr				:	TOK_IDENT
+VarExpr				:	TOK_IDENT { // on construit notre operande sans valeur 
+                                                    $$ = new Operande($1 , new Valeur(table->getSymbole($1)->getType()), false);
+                                                  }
 				|	VarExpr SEP_CO ListIndices SEP_CF
 				|	VarExpr SEP_DOT TOK_IDENT %prec OP_DOT
 				|	VarExpr OP_PTR
 				;
 
-LeftExpr                        :       TOK_IDENT
-                                |       LeftExpr SEP_DOT TOK_IDENT
-                                |       LeftExpr OP_PTR
-                                |       LeftExpr SEP_CO ListIndices SEP_CF
-                                ;
 Call			 	:	TOK_IDENT Parameters
 				;
 
@@ -393,5 +473,6 @@ int main ( int argc, char** argv )
 	yyparse ();
 	tableid->Affichage();
 	table->Afficher(*tableid);
+        ContenCodeCourant->affichage();
         fclose ( yyin );
 }

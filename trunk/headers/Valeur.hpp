@@ -14,6 +14,7 @@
 
 class Valeur {
 public:
+    Valeur();
     Valeur(Type* t);
     Valeur(Type* t, int i);
     Valeur(Type* t, float f);
@@ -21,6 +22,14 @@ public:
     Valeur(Type* t, bool b);
     ~Valeur();
 
+    bool getValeurBool();
+    int getValeurInteger();
+    float getValeurFloat();
+    std::string* getValeurString();
+    Type* getT();
+
+    void setType(Type* _type);
+    
 private:
     Type* type;
     int i;
@@ -28,14 +37,11 @@ private:
     bool b;
     std::string* s;
         
-    Type* getT();
+   
 
-    bool getValeurBool();
-    int getValeurInteger();
-    float getValeurFloat();
-    std::string* getValeurString();
+    
 
-    void setType(Type* _type);
+
 
 
 };
