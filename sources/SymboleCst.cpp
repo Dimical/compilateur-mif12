@@ -6,6 +6,7 @@
  */
 
 #include "../headers/SymboleCst.hpp"
+#include "../headers/Type.hpp"
 
 SymboleCst::SymboleCst(): Symbole() {
 }
@@ -18,6 +19,11 @@ SymboleCst::SymboleCst(const SymboleCst& orig) {
 }
 
 SymboleCst::~SymboleCst() {
+}
+
+Type * SymboleCst::getType()
+{
+    return this->T;
 }
 
 //std::string toString(){

@@ -20,4 +20,7 @@ std::string SymboleTemp::toString(){
     return "Temporaire\t[]";
 }
 
-
+Type * SymboleTemp::getType()
+{
+    return this->T;
+}

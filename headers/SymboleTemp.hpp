@@ -21,6 +21,7 @@ public:
     SymboleTemp(const SymboleTemp& orig);
     virtual ~SymboleTemp();
     std::string toString();
+    Type * getType();
 private:
 
 

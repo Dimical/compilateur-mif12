@@ -21,3 +21,8 @@ SymboleProg::~SymboleProg() {
 std::string SymboleProg::toString(){
     return "Programme\t[]";
 }
+
+Type * SymboleProg::getType()
+{
+    return this->T;
+}

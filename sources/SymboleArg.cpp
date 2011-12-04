@@ -22,6 +22,12 @@ SymboleArg::SymboleArg(const SymboleArg& orig) {
 
 SymboleArg::~SymboleArg() {
 }
-/*std::string toString(){
-    return("");
-}*/
+
+std::string SymboleArg::toString(){
+    return "FormalArgument\t[type:"+this->T->getClass()+"]";
+}
+
+Type * SymboleArg::getType()
+{
+    return this->T;
+}

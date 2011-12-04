@@ -27,7 +27,7 @@ std::string CodeInstruction::Add(TableId *TI, Operande* resultat, Operande* Arg1
     std::string retour;
     std::ostringstream out1;
     std::ostringstream out2;
-
+    
     retour = TI->getidTOnum(resultat->getId()) + " = ";
     if(Arg1->EstCalculee())
     {
@@ -45,10 +45,13 @@ std::string CodeInstruction::Add(TableId *TI, Operande* resultat, Operande* Arg1
                 }
             }
         }
+        
         retour += out1.str()+ " + ";
+       
 
     }
     else{
+        cout << "debugelse" << endl;
         cout <<endl << "ce ne sont pas des calculées" <<TI->getidTOnum(Arg1->getId()) <<endl;
         retour += TI->getidTOnum(Arg1->getId()) + " + ";
     }

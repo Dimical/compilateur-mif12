@@ -19,6 +19,8 @@ public:
     SymboleArg(const SymboleArg& orig);
     SymboleArg(Type *t, bool b, int pos);
     virtual ~SymboleArg();
+    std::string toString();
+    Type * getType();
    // std::string toString();
 
 private:

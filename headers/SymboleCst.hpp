@@ -21,6 +21,7 @@ public:
     SymboleCst(Type *t);
     SymboleCst(const SymboleCst& orig);
     virtual ~SymboleCst();
+    Type * getType();
    // std::string toString();
 
 private:

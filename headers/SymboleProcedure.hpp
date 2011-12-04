@@ -16,8 +16,12 @@ class SymboleProcedure : public Symbole
 {
 public:
     SymboleProcedure();
+    SymboleProcedure(int arit);
     SymboleProcedure(const SymboleProcedure& orig);
     virtual ~SymboleProcedure();
+    std::string toString();
+    void setArite(int);
+    Type * getType();
   //  std::string toString();
 
 private:

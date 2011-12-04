@@ -17,21 +17,25 @@
 class TableSymb {
 
 public:
-    TableSymb();
-    void Ajout(Symbole *Sym, int i);
+    TableSymb(std::string, TableSymb*);
+    void Ajout(Symbole* Sym, int i);
     //void AjoutVar(SymboleVar Sym);
     //void AjoutProg(SymboleProg Sym);
     void Afficher(TableId Tid);
      TableSymb(const TableSymb& orig);
     ~TableSymb(void);
+    std::string getName();
 
     Symbole * getSymbole(int id);
     void Test();
 
     int getNbrsym();
-
-    std::map<int, Symbole *> TS; // Notre map
 private:
+    std::map<int, Symbole *> TS; // Notre map
+    //le nom de la table (nom de fonction/procedure ou programme principal)
+    std::string nom;
+    //le pointeur sur la table de symbole mere, null si programme principal
+    TableSymb * tSymbMere;
     
 };
 

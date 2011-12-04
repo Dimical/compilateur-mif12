@@ -17,13 +17,17 @@ class SymboleFonction : public Symbole
 {
 public:
     SymboleFonction();
+    SymboleFonction(Type * tretour, int ar);
     SymboleFonction(const SymboleFonction& orig);
     virtual ~SymboleFonction();
-   // std::string toString();
+    std::string toString();
+    Type * getType();
 
 private:
+    std::string convertInt(int number);
     //on fait une reference sur une autre table de symbole
     TableSymb * TabS;
+    Type * typeRetour;
     int arite; //nombre d'arguments
 
 };

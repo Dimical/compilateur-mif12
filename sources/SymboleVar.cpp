@@ -23,3 +23,8 @@ SymboleVar::~SymboleVar() {
 std::string SymboleVar::toString(){
     return "Variable\t[type:"+this->T->getClass()+"]";
 }
+
+Type * SymboleVar::getType()
+{
+    return this->T;
+}
