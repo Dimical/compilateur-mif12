@@ -42,7 +42,7 @@ void TableId::Affichage()
     for (iter= Champ.begin(); iter !=Champ.end(); ++iter)
     {
         // on affichage le numéro avec son identifiant
-        cout<< "\t    " << iter->first << " : " << iter->second <<endl;
+        cout<< "\t    " << (iter->first)+1 << " : " << iter->second <<endl;
     }
     cout << "---IdentificatorTable" <<endl;
 

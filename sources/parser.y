@@ -215,7 +215,7 @@ Operande* operande;
 
 %%
 
-Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { cout<<"DEBUG Program"<<endl; table->Ajout(new SymboleProg(),0);
+Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { table->Ajout(new SymboleProg(),0);
 
                                                     // Partie etiquette-------------------------
                                                     Symbole *prog = new SymboleEtiquette();
@@ -246,7 +246,7 @@ Block				:	 BlockDeclConst BlockDeclType BlockDeclVar BlockDeclFunc BlockCode{
                                         }
 				;
 
-BlockDeclConst			:	{cout<<"DEBUG BlockDeclConst"<<endl;}   KW_CONST ListDeclConst
+BlockDeclConst			:	  KW_CONST ListDeclConst
 			 	|
 			 	;
 
@@ -254,7 +254,7 @@ ListDeclConst			:	ListDeclConst DeclConst
 			 	|	DeclConst
 			 	;
 
-DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL {   cout<<"DEBUG DeclConst"<<endl;/*il faut ajouter une constante a la table des symboles*/}
+DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL
 			 	;
 
 BlockDeclType			:	KW_TYPE ListDeclType
@@ -313,7 +313,7 @@ DeclFunc			:	{arite=0;}  ProcDecl {
                                                                 table->Ajout( new SymboleProcedure(arite),$2);
                                                        }
                                                         else
-                                                                cout << "no symbol table to pop" << endl;
+                                                                {/*cout << "no symbol table to pop" << endl;*/}
 
                                                             // Partie etiquette-------------------------
                                                             Symbole *proc = new SymboleEtiquette();
@@ -334,7 +334,7 @@ DeclFunc			:	{arite=0;}  ProcDecl {
 
                                                        }
                                                         else
-                                                                cout << "no symbol table to pop" << endl;
+                                                                {/*cout << "no symbol table to pop" << endl;*/}
 
                                                             // Partie etiquette-------------------------
                                                             Symbole *func = new SymboleEtiquette();
@@ -447,10 +447,10 @@ EnumType			:	SEP_PO ListEnumValue SEP_PF{/*
 			 	;
 
 ListEnumValue			:	ListEnumValue SEP_COMMA TOK_IDENT   {
-                                                                                listEnum.push_back(tableid->getidTOnum($3)); cout << "ajout TS" << tableid->getidTOnum($3) << endl;
+                                                                                listEnum.push_back(tableid->getidTOnum($3));/* cout << "ajout TS" << tableid->getidTOnum($3) << endl;*/
                                                                             }
 			 	|	TOK_IDENT   {
-                                                        listEnum.push_back(tableid->getidTOnum($1)); cout << "ajout TS" << tableid->getidTOnum($1) << endl;
+                                                        listEnum.push_back(tableid->getidTOnum($1)); /*cout << "ajout TS" << tableid->getidTOnum($1) << endl;*/
                                                     }
 			 	;
 
@@ -591,7 +591,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -624,7 +624,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -656,7 +656,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -688,7 +688,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -720,7 +720,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -752,7 +752,7 @@ MathExpr			:	Expression OP_ADD Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -788,7 +788,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -819,7 +819,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -850,7 +850,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -881,7 +881,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -912,7 +912,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -943,7 +943,7 @@ CompExpr			:	Expression OP_EQ Expression{
                                                                     // AJoute d'une temporaire dans les tables
                                                                     std::stringstream out;
                                                                     out<<tempoCourant;
-                                                                    tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                                                    tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                                                     table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                                                     tempoCourant ++;
 
@@ -977,7 +977,7 @@ BoolExpr			:	Expression KW_AND Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); 
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -1009,7 +1009,7 @@ BoolExpr			:	Expression KW_AND Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -1041,7 +1041,7 @@ BoolExpr			:	Expression KW_AND Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -1073,7 +1073,7 @@ BoolExpr			:	Expression KW_AND Expression
                                             // AJoute d'une temporaire dans les tables
                                             std::stringstream out;
                                             out<<tempoCourant;
-                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            tableid->Ajout("__Temp000"+out.str()); /*cout << "ajout" <<endl;*/
                                             table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
                                             tempoCourant ++;
 
@@ -1118,10 +1118,10 @@ AtomExpr			:	SEP_PO Expression SEP_PF
 
 VarExpr				:	TOK_IDENT { // on construit notre operande sans valeur
                                                     if(table->getSymbole($1)!=NULL){
-                                                        cout <<endl << "Le numero id correspondant :" << table->getSymbole($1)->getType()->getClass() << endl;
+                                                        /*cout <<endl << "Le numero id correspondant :" << table->getSymbole($1)->getType()->getClass() << endl;*/
                                                         $$ = new Operande($1 , new Valeur(table->getSymbole($1)->getType()), false);
                                                     }
-                                                    else{cout<<"DEBUG else "<< endl;}
+                                                    else{/*cout<<"DEBUG else "<< endl;*/}
                                                   }
 				|	VarExpr SEP_CO ListIndices SEP_CF
 				|	VarExpr SEP_DOT TOK_IDENT %prec OP_DOT
