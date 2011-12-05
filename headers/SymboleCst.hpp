@@ -12,20 +12,21 @@
 #include "Type.hpp"
 #include <string>
 
+using namespace std;
+
 
 class SymboleCst : public Symbole
 {
 public:
 
-    SymboleCst();
-    SymboleCst(Type *t);
+    SymboleCst(Type *t, string v);
     SymboleCst(const SymboleCst& orig);
     virtual ~SymboleCst();
     Type * getType();
-   // std::string toString();
+    std::string toString();
 
 private:
-    
+    string value;
     // type, valeur, code 3@
 
 };

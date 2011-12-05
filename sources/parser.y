@@ -30,6 +30,7 @@
 #include "../headers/TypeArray.hpp"
 #include "../headers/TypeEnum.hpp"
 #include "../headers/SymboleEtiquette.hpp"
+#include "../headers/SymboleCst.hpp"
 
 
 
@@ -395,13 +396,23 @@ BaseType			:	TOK_IDENT {$$=NULL;}
 EnumType			:	SEP_PO ListEnumValue SEP_PF{/*
                                                 $$ = new TypeArray($6,listInterval);listInterval.clear();
                                                 */
+                                                TypeEnumValue *tempType;
                                                 $$ = new TypeEnum(listEnum);
+                                                for (unsigned int i=0;i<listEnum.size(); i++){
+                                                    tempType = new TypeEnumValue(listEnum);
+                                                    Symbole *temp = new SymboleCst(tempType,listEnum.at(i));
+                                                    table->Ajout(temp, tableid->getnumTOid(listEnum.at(i)));
+                                                }
                                                 listEnum.clear();
                                                 }
 			 	;
 
-ListEnumValue			:	ListEnumValue SEP_COMMA TOK_IDENT{listEnum.push_back(tableid->getidTOnum($3));}
-			 	|	TOK_IDENT {listEnum.push_back(tableid->getidTOnum($1));}
+ListEnumValue			:	ListEnumValue SEP_COMMA TOK_IDENT   {
+                                                                                listEnum.push_back(tableid->getidTOnum($3)); cout << "ajout TS" << tableid->getidTOnum($3) << endl;
+                                                                            }
+			 	|	TOK_IDENT   {
+                                                        listEnum.push_back(tableid->getidTOnum($1)); cout << "ajout TS" << tableid->getidTOnum($1) << endl;
+                                                    }
 			 	;
 
 InterType			:	InterBase SEP_DOTDOT InterBase {$$ = new TypeInterval($1,$3); }
