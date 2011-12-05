@@ -25,6 +25,16 @@ private:
 
 };
 
+class TypeEnumValue : public Type{
+public :
+    TypeEnumValue(vector<string> v);
+    ~TypeEnumValue();
+    std::string getClass();
+
+private:
+    vector<string> * listEnum;
+
+};
 
 
 #endif	/* TYPEENUM_HPP */

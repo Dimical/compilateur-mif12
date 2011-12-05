@@ -8,11 +8,11 @@
 #include "../headers/SymboleCst.hpp"
 #include "../headers/Type.hpp"
 
-SymboleCst::SymboleCst(): Symbole() {
-}
+using namespace std;
 
-SymboleCst::SymboleCst(Type *t){
-
+SymboleCst::SymboleCst(Type *t, string v){
+    this->T=t;
+    this->value = v;
 }
 
 SymboleCst::SymboleCst(const SymboleCst& orig) {
@@ -26,7 +26,6 @@ Type * SymboleCst::getType()
     return this->T;
 }
 
-//std::string toString(){
-//    return("");
-//}
-
+string SymboleCst::toString(){
+    return "Constant\t[type:"+this->T->getClass()+"]";
+}

@@ -30,6 +30,29 @@ std::string TypeEnum::getClass(){
 
 
 }
+
+
+TypeEnumValue::TypeEnumValue(vector<string> v) {
+    listEnum = new vector<string> (v);
+}
+
+TypeEnumValue::~TypeEnumValue() {
+}
+
+std::string TypeEnumValue::getClass(){
+    string retour="";
+    for (unsigned int i=0;i<listEnum->size(); i++){
+        if(i!=0) retour += ",";
+        retour += listEnum->at(i);
+    }
+    return "enumeration{"+retour+"},value:]";
+
+
+}
+
+
+
+
 /*std::string TypeArray::getClass() {
     for (unsigned int i=0;i<listInterval->size(); i++){
         retour += ",";
