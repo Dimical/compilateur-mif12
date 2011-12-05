@@ -15,7 +15,7 @@ class Operande {
 public:
     Operande();
     Operande(int numeroId, Valeur *valeur, bool Calculee);
-    Operande(const Operande& orig);
+    Operande(const Operande* orig);
     virtual ~Operande();
     int getId();
     Valeur * getValeur();

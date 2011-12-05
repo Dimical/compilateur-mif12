@@ -21,6 +21,8 @@ public:
 
     // constructeur d'instruction avec une étiquette et un codeInstruction
     Instruction(/*Etiquette *Et, */std::string Opera, Operande *Resultat, Operande *Arg1, Operande *Arg2, TableId *TI);
+    Instruction(std::string Opera, int idResult, int idArgument, TableId *TI);
+    Instruction(std::string Opera);
     ~Instruction();
 
     std::string getOperateur(); // retourne simplement le nom de l'operateur
