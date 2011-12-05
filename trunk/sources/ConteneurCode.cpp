@@ -53,6 +53,7 @@ void ConteneurCode::affichage()
         
         cout << listeInstruction.at(i)->getaffichageLigne()<<endl;
     }
+     cout<< "-----------------------"<<endl;
 
 }
 Operande* ConteneurCode::getValeurCourante(std::string nomVar)

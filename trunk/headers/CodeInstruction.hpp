@@ -55,6 +55,15 @@ public:
     // LES FONCTIONS DE L'OP MOD
     std::string Mod(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
 
+
+    // LES COMPARAISONS BOOLEENES
+    std::string Eq(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+    std::string Neq(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+    std::string Lt(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+    std::string Lte(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+    std::string Gt(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+    std::string Gte(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2);
+
 private:
 
 };

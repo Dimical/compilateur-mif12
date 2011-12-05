@@ -51,8 +51,6 @@ std::string CodeInstruction::Add(TableId *TI, Operande* resultat, Operande* Arg1
 
     }
     else{
-        cout << "debugelse" << endl;
-        cout <<endl << "ce ne sont pas des calculées" <<TI->getidTOnum(Arg1->getId()) <<endl;
         retour += TI->getidTOnum(Arg1->getId()) + " + ";
     }
     if(Arg2->EstCalculee()){
@@ -330,7 +328,6 @@ std::string CodeInstruction::Not(TableId* TI, Operande* Res, Operande* Arg1)
     std::ostringstream out2;
 
     retour = TI->getidTOnum(Res->getId()) + " = ";
-    cout <<endl<< " Pour la temporaire son id c'est : "<< TI->getidTOnum(Res->getId()) <<endl;
     if(Arg1->EstCalculee())
     {
         if(Arg1->getValeur()->getT()->getClass() == "boolean")
@@ -339,10 +336,266 @@ std::string CodeInstruction::Not(TableId* TI, Operande* Res, Operande* Arg1)
         retour += out1.str()+ " ! ";
     }
     else{
-        cout << "ON rentre iciciciciciicicicic : " <<TI->getidTOnum(Arg1->getId())<<endl;
         retour +=  " ! " + TI->getidTOnum(Arg1->getId());
     }
 
     return retour;
 
+}
+std::string CodeInstruction::Eq(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " == ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " == ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
+}
+std::string CodeInstruction::Neq(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " != ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " != ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
+}
+std::string CodeInstruction::Lt(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " < ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " < ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
+}
+std::string CodeInstruction::Lte(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " <= ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " <= ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
+}
+std::string CodeInstruction::Gt(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " > ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " > ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
+}std::string CodeInstruction::Gte(TableId* TI, Operande* resultat, Operande* Arg1, Operande* Arg2)
+{
+    std::string retour;
+    std::ostringstream out1;
+    std::ostringstream out2;
+
+    retour = TI->getidTOnum(resultat->getId()) + " = ";
+    if(Arg1->EstCalculee())
+    {
+        if(Arg1->getValeur()->getT()->getClass() == "integer")
+            out1 << Arg1->getValeur()->getValeurInteger();
+        else{
+            if(Arg1->getValeur()->getT()->getClass() == "real")
+                out1 << Arg1->getValeur()->getValeurFloat();
+            else{
+                if(Arg1->getValeur()->getT()->getClass() == "string")
+                        out1 << Arg1->getValeur()->getValeurString();
+            }
+        }
+
+        retour += out1.str()+ " >= ";
+    }
+    else{
+        retour += TI->getidTOnum(Arg1->getId()) + " >= ";
+    }
+    if(Arg2->EstCalculee()){
+        if(Arg2->getValeur()->getT()->getClass() == "integer")
+            out2 << Arg2->getValeur()->getValeurInteger();
+        else{
+            if(Arg2->getValeur()->getT()->getClass() == "real")
+                out2 << Arg2->getValeur()->getValeurFloat();
+            else{
+                if(Arg2->getValeur()->getT()->getClass() == "string")
+                        out2 << Arg2->getValeur()->getValeurString();
+            }
+        }
+        retour += out2.str();
+    }
+    else{
+        retour += TI->getidTOnum(Arg2->getId());
+    }
+    return retour;
 }
