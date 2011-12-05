@@ -1,8 +1,11 @@
 program base;
 FUNCTION affi (a : char): boolean;
 var da: integer;
+ toto : boolean;
+ titi : boolean;
 BEGIN
-da := 2 + 3;
+if toto AND titi then
+da := 2 MOD 3 DIV 4;
 END;
 PROCEDURE dudule (a : integer);
 var x : integer;
