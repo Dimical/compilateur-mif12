@@ -26,7 +26,11 @@
 #include "../headers/Instruction.hpp"
 #include "../headers/Operande.hpp"
 #include "../headers/Valeur.hpp"
+#include "../headers/TypeInterval.hpp"
+#include "../headers/TypeArray.hpp"
+#include "../headers/TypeEnum.hpp"
 #include "../headers/SymboleEtiquette.hpp"
+
 
 
 using namespace std;
@@ -61,6 +65,8 @@ int ifelsecourant = 0; // notre compteur de ifelse
 vector <int> DeclVarMult; /*Pour les declaration multiples de variables */
 vector <char *> Code3adresses; /* Pour le 3adresses pas besoin*/
 vector <TableSymb*> tableSAffichage; /* Les tables de symboles imbriquees */
+vector <TypeInterval*> listInterval; /* Pour une array a plusieur dimensions */
+vector <string> listEnum; /* Pour ajouter les enumerations */
 
 stack<TableSymb*> pushedSymbolTables; /* la pile pour gérer plusieurs tables de symboles */
 TableSymb * tableTemp; /* */
@@ -87,8 +93,6 @@ int valueint;
 float valuefloat;
 bool valuebool;
 char *valuestring;
-
-
 
 Type* type;
 Operande* operande;
@@ -154,6 +158,7 @@ Operande* operande;
 
 %type <typeIdent> Type
 %type <typeIdent> BaseType
+%type <typeIdent> UserType
 
 
 %token <numid> TOK_IDENT
@@ -161,6 +166,14 @@ Operande* operande;
 %token <valuefloat> TOK_REAL
 %token <valuebool> TOK_BOOLEAN
 %token <valuestring> TOK_STRING
+
+%type <typeIdent> InterType
+%type <typeIdent> ArrayType
+%type <typeIdent> ArrayIndex
+%type <typeIdent> EnumType
+%type <valueint> InterBase
+%type <valueint> NSInterBase
+
 
 %type <numid> ProcIdent
 %type <numid> ProcHeader
@@ -200,7 +213,7 @@ Operande* operande;
 Program				:	ProgramHeader SEP_SCOL Block SEP_DOT { cout<<"DEBUG Program"<<endl; table->Ajout(new SymboleProg(),0);}
 				;
 
-ProgramHeader			:	KW_PROGRAM TOK_IDENT    {   
+ProgramHeader			:	KW_PROGRAM TOK_IDENT    {
                                                                     cout<<"DEBUG ProgramHeader"<<endl;
                                                                     table= new TableSymb(tableid->getidTOnum($2), NULL);
                                                                     tableSAffichage.push_back(table);
@@ -218,8 +231,8 @@ BlockDeclConst			:	{cout<<"DEBUG BlockDeclConst"<<endl;}   KW_CONST ListDeclCons
 			 	|
 			 	;
 
-ListDeclConst			:	{cout<<"DEBUG ListDeclConst"<<endl;}    ListDeclConst DeclConst
-			 	|	{cout<<"DEBUG ListDeclConst"<<endl;}    DeclConst
+ListDeclConst			:	ListDeclConst DeclConst
+			 	|	DeclConst
 			 	;
 
 DeclConst			:	TOK_IDENT OP_EQ Expression SEP_SCOL {   cout<<"DEBUG DeclConst"<<endl;/*il faut ajouter une constante a la table des symboles*/}
@@ -274,7 +287,7 @@ DeclFunc			:	{arite=0;}  ProcDecl    {
                                                                 /*table = pushedSymbolTables.top();*/
                                                                 pushedSymbolTables.pop();
                                                                 table = pushedSymbolTables.top();
-                                                                table->Ajout( new SymboleProcedure(arite),$2);                                                              
+                                                                table->Ajout( new SymboleProcedure(arite),$2);
                                                        }
                                                         else
                                                                 cout << "no symbol table to pop" << endl;
@@ -351,7 +364,7 @@ FuncHeader			:	FuncIdent FuncResult    {/* on remonte l'identifiant et on met le
                                                     }
 			 	;
 
-FuncIdent			:	KW_FUNC TOK_IDENT   { $$=$2;                                                                
+FuncIdent			:	KW_FUNC TOK_IDENT   { $$=$2;
                                                                 table = new TableSymb(tableid->getidTOnum($2), pushedSymbolTables.top());tableSAffichage.push_back(table);
                                                                 pushedSymbolTables.push(table);
                                                             }
@@ -360,14 +373,13 @@ FuncIdent			:	KW_FUNC TOK_IDENT   { $$=$2;
 FuncResult			:	SEP_DOTS BaseType {$$ = $2}
 			 	;
 
-Type				:	UserType
-			 	|	BaseType {$$ = $1;
-                                            }
+Type				:	UserType {$$ = $1;}
+			 	|	BaseType {$$ = $1;}
 			 	;
 
-UserType			:	EnumType
-			 	|	InterType
-			 	|	ArrayType
+UserType			:	EnumType    {$$ = $1;}
+			 	|	InterType {$$ = $1;}
+			 	|	ArrayType   {$$ = $1;}
 			 	|	RecordType
 			 	|	PointerType
 			 	;
@@ -380,33 +392,38 @@ BaseType			:	TOK_IDENT {$$=NULL;}
 				|	KW_STRING {$$ = new TypeString();}
 				;
 
-EnumType			:	SEP_PO ListEnumValue SEP_PF
+EnumType			:	SEP_PO ListEnumValue SEP_PF{/*
+                                                $$ = new TypeArray($6,listInterval);listInterval.clear();
+                                                */
+                                                $$ = new TypeEnum(listEnum);
+                                                listEnum.clear();
+                                                }
 			 	;
 
-ListEnumValue			:	ListEnumValue SEP_COMMA TOK_IDENT
-			 	|	TOK_IDENT
+ListEnumValue			:	ListEnumValue SEP_COMMA TOK_IDENT{listEnum.push_back(tableid->getidTOnum($3));}
+			 	|	TOK_IDENT {listEnum.push_back(tableid->getidTOnum($1));}
 			 	;
 
-InterType			:	InterBase SEP_DOTDOT InterBase
+InterType			:	InterBase SEP_DOTDOT InterBase {$$ = new TypeInterval($1,$3); }
 			 	;
 
-InterBase			:	NSInterBase
-			 	|	OP_SUB NSInterBase
+InterBase			:	NSInterBase {$$ = $1;}
+			 	|	OP_SUB NSInterBase {$$ = 0-$2;}
 			 	;
 
 NSInterBase			:	TOK_IDENT
-			 	|	TOK_INTEGER
+			 	|	TOK_INTEGER {$$ = $1;}
 			 	;
 
-ArrayType			:	KW_ARRAY SEP_CO ListArrayIndex SEP_CF KW_OF Type
+ArrayType			:	KW_ARRAY SEP_CO ListArrayIndex SEP_CF KW_OF Type {$$ = new TypeArray($6,listInterval);listInterval.clear();}
 			 	;
 
-ListArrayIndex			:	ListArrayIndex SEP_COMMA ArrayIndex
-				|	ArrayIndex
+ListArrayIndex			:	ListArrayIndex SEP_COMMA ArrayIndex {listInterval.push_back((TypeInterval*)($3));}
+				|	ArrayIndex {listInterval.push_back((TypeInterval*)($1));}
 				;
 
 ArrayIndex			:	TOK_IDENT
-			 	|	InterType
+			 	|	InterType {$$ = $1;}
 			 	;
 
 RecordType			:	KW_RECORD RecordFields KW_END
@@ -513,10 +530,7 @@ ForDirection			:	KW_TO
 			 	|	KW_DOWNTO
 			 	;
 
-Expression			:	MathExpr {
-                                                   
-
-                                                       }
+Expression			:	MathExpr
 			 	|	CompExpr
 			 	|	BoolExpr
 			 	|	AtomExpr
