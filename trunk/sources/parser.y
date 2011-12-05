@@ -26,6 +26,8 @@
 #include "../headers/Instruction.hpp"
 #include "../headers/Operande.hpp"
 #include "../headers/Valeur.hpp"
+#include "../headers/SymboleEtiquette.hpp"
+
 
 using namespace std;
 
@@ -42,16 +44,16 @@ Type *t = new TypeEntier();
 
 
 
-//-----------
-
+// Pour les temporaires
 int tempoCourant= 0; // notre compteur de temporaire
- Operande* operandeTempo;
+Operande* operandeTempo;
+
+// Pour les étiquettes
+int forcourant = 0; // notre compteur de for
+int ifcourant = 0; // notre compteur de if
+int ifelsecourant = 0; // notre compteur de ifelse
 
 //------------------
-
-
-
-
 
 
 
@@ -206,7 +208,10 @@ ProgramHeader			:	KW_PROGRAM TOK_IDENT    {
                                                                 }
 				;
 
-Block				:	 {cout<<"DEBUG Block"<<endl;}   BlockDeclConst BlockDeclType BlockDeclVar BlockDeclFunc BlockCode
+Block				:	 {
+                                            Instruction *debInstruction = new Instruction("DEB");
+                                            ContenCodeCourant->ajouterInstruct(debInstruction);
+                                        }   BlockDeclConst BlockDeclType BlockDeclVar BlockDeclFunc BlockCode
 				;
 
 BlockDeclConst			:	{cout<<"DEBUG BlockDeclConst"<<endl;}   KW_CONST ListDeclConst
@@ -429,9 +434,73 @@ ListInstr			:	ListInstr SEP_SCOL Instr
 Instr				:	KW_WHILE Expression KW_DO Instr
 			 	|	KW_REPEAT ListInstr KW_UNTIL Expression
 			 	|	KW_FOR TOK_IDENT OP_AFFECT Expression ForDirection Expression KW_DO Instr
+                                        {
+
+                                             // Partie etiquette-------------------------
+                                           
+                                            Symbole *deb_for = new SymboleEtiquette();
+                                            Symbole *fin_for = new SymboleEtiquette();
+
+                                            std::stringstream out;
+                                            out<<forcourant;
+
+                                            tableid->Ajout("deb_for"+out.str());
+                                            tableid->Ajout("fin_for"+out.str());
+
+                                            table->Ajout(deb_for, tableid->getnumTOid("deb_for"+out.str()));
+                                            table->Ajout(fin_for, tableid->getnumTOid("fin_for"+out.str()));
+
+                                            forcourant++;
+
+                                            // ---------------------------------------
+                                        }
 			 	|	KW_IF Expression KW_THEN Instr %prec KW_IFX
+                                        {
+                                            Instruction* Instr= new Instruction(/*etiquette1,*/ "IF",$2, NULL, NULL, tableid);
+                                            ContenCodeCourant->ajouterInstruct(Instr);
+
+                                            // Partie etiquette-------------------------
+
+
+                                            Symbole *deb_if = new SymboleEtiquette();
+                                            Symbole *fin_if = new SymboleEtiquette();
+
+                                            std::stringstream out;
+                                            out<<ifcourant;
+
+                                            tableid->Ajout("deb_if"+out.str());
+                                            tableid->Ajout("fin_if"+out.str());
+
+                                            table->Ajout(deb_if, tableid->getnumTOid("deb_if"+out.str()));
+                                            table->Ajout(fin_if, tableid->getnumTOid("fin_if"+out.str()));
+
+                                            ifcourant++;
+
+                                            // ---------------------------------------
+                                        }
 			 	|	KW_IF Expression KW_THEN Instr KW_ELSE Instr
+                                        {
+                                            // Partie etiquette-------------------------
+
+
+                                            Symbole *deb_ifelse = new SymboleEtiquette();
+                                            Symbole *fin_ifelse = new SymboleEtiquette();
+
+                                            std::stringstream out;
+                                            out<<ifelsecourant;
+
+                                            tableid->Ajout("deb_ifelse"+out.str());
+                                            tableid->Ajout("fin_ifelse"+out.str());
+
+                                            table->Ajout(deb_ifelse, tableid->getnumTOid("deb_ifelse"+out.str()));
+                                            table->Ajout(fin_ifelse, tableid->getnumTOid("fin_ifelse"+out.str()));
+
+                                            ifelsecourant++;
+
+                                            // ---------------------------------------
+                                        }
 			 	|	VarExpr OP_AFFECT Expression {
+                                        
                                         Instruction* Instr= new Instruction(/*etiquette1,*/ "CPY", $1,$3, NULL, tableid);
                                         ContenCodeCourant->ajouterInstruct(Instr);
                                         /////////ici ici ici ////////////////////
@@ -458,29 +527,26 @@ Expression			:	MathExpr {
 MathExpr			:	Expression OP_ADD Expression
                                         {
 
-                                        // on va s'occuper de nos temporaire ici
-                                        // AJoute d'une temporaire dans les tables
-                                        std::stringstream out;
-                                        out<<tempoCourant;
-                                        tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
-                                        cout <<endl << "TAILLE DE LA TABLE DES SYMBOLES " << table->getNbrsym() <<endl;
-                                        table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));/*4*//*table->getNbrsym()*/
-                                        tempoCourant ++;
-                                        
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
 
-                                        operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
 
 
 
                                             if(($1 != NULL) && ($3 !=NULL))
                                             {
                                                 //Etiquette* etiquette1= new Etiquette();
-
                                                 // on créer une nouvelle instruction
-                                        // on teste si nos expressions sont correctes
-
+                                                // on teste si nos expressions sont correctes
                                                 Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "ADD", operandeTempo, $1, $3, tableid);
-                                        // on teste si nos expressions sont correctes
+                                                // on teste si nos expressions sont correctes
 
                                                 // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
 
@@ -488,19 +554,169 @@ MathExpr			:	Expression OP_ADD Expression
 
                                                 // on retourne le résultat
                                                 $$ = operandeTempo;
-
-                                                //string t1= $1;
-                                                //cout<<"Test : " << t1<<endl;
                                             }
-
-
-
+                                            
                                         }
 			 	|	Expression OP_SUB Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "SUB", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression OP_MUL Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "MUL", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression OP_SLASH Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "DIV", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression KW_DIV Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "DIV", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression KW_MOD Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "MOD", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression OP_EXP Expression
 			 	|	OP_SUB Expression %prec OP_NEG
 			 	|	OP_ADD Expression %prec OP_POS
@@ -515,9 +731,131 @@ CompExpr			:	Expression OP_EQ Expression
 			 	;
 
 BoolExpr			:	Expression KW_AND Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "AND", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression KW_OR Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "OR", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	Expression KW_XOR Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($1 != NULL) && ($3 !=NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "XOR", operandeTempo, $1, $3, tableid);
+                                                // on teste si nos expressions sont correctes
+
+                                                // faire l'operation de l'operande (addition) -> il se fait dans l'instruction (codeInstruction.cpp)
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	|	KW_NOT Expression
+                                        {
+
+                                            // on va s'occuper de nos temporaire ici
+                                            // AJoute d'une temporaire dans les tables
+                                            std::stringstream out;
+                                            out<<tempoCourant;
+                                            tableid->Ajout("__Temp000"+out.str()); cout << "ajout" <<endl;
+                                            table->Ajout(new SymboleTemp(), tableid->getnumTOid("__Temp000"+out.str()));
+                                            tempoCourant ++;
+
+                                            // Rappel: pour la table des symbole, le premier élement est le numéro correspondant à la table id
+                                            operandeTempo = new Operande((tableid->getnumTOid("__Temp000"+out.str())), new Valeur(), false);
+
+
+
+                                            if(($2 != NULL))
+                                            {
+                                                //Etiquette* etiquette1= new Etiquette();
+                                                // on créer une nouvelle instruction
+                                                // on teste si nos expressions sont correctes
+
+                                                Instruction* nvelleInstr= new Instruction(/*etiquette1,*/ "NOT", operandeTempo, $2, NULL, tableid);
+
+                                                ContenCodeCourant->ajouterInstruct(nvelleInstr);
+
+                                                // on retourne le résultat
+                                                $$ = operandeTempo;
+                                            }
+                                        }
 			 	;
 
 AtomExpr			:	SEP_PO Expression SEP_PF
@@ -525,20 +863,23 @@ AtomExpr			:	SEP_PO Expression SEP_PF
                                                         $$ = new Operande(-1 , new Valeur(new TypeEntier, $1), true);
                                                     }
 			 	|	TOK_REAL
-			 	|	TOK_BOOLEAN
+                                                    {
+                                                        $$ = new Operande(-1 , new Valeur(new TypeReel, $1), true);
+                                                    }
+			 	|	TOK_BOOLEAN {
+                                                        $$ = new Operande(-1 , new Valeur(new TypeBool, $1), true);
+                                                    }
 			 	|	KW_NIL
 			 	|	TOK_STRING
+                                                    {
+                                                        $$ = new Operande(-1 , new Valeur(new TypeString, $1), true);
+                                                    }
 			 	;
 
 VarExpr				:	TOK_IDENT { // on construit notre operande sans valeur
-                                                    cout<<"DEBUG VarExpr DEBUT"<<endl;
-                                                    cout<<"DEBUG1 "<<table->getSymbole($1)<<endl;
-                                                    cout<<"TOK_IDENT = "<< $1 <<endl;
-                                                    cout<<"DEBUG2 "<< endl;
                                                     if(table->getSymbole($1)!=NULL){
-                                                        cout<<"DEBUG3 "<<   table->getSymbole($1)->getType()    <<endl;
+                                                        cout <<endl << "Le numero id correspondant :" << table->getSymbole($1)->getType()->getClass() << endl;
                                                         $$ = new Operande($1 , new Valeur(table->getSymbole($1)->getType()), false);
-                                                        cout<<"DEBUG VarExpr FIN"<<endl;
                                                     }
                                                     else{cout<<"DEBUG else "<< endl;}
                                                   }

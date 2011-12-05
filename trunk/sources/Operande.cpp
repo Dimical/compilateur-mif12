@@ -6,6 +6,9 @@
  */
 
 #include "../headers/Operande.hpp"
+#include <cstdio>
+
+using namespace std;
 
 Operande::Operande() {
 }
@@ -17,7 +20,11 @@ Operande::Operande(int numeroId, Valeur *valeur, bool Calculee){
     this->Calculee = Calculee;
 }
 
-Operande::Operande(const Operande& orig) {
+Operande::Operande(const Operande* orig) {
+    this->Calculee = orig->Calculee;
+    this->numeroIdentificateur = orig->numeroIdentificateur;
+    this->val = orig->val;
+
 }
 
 Operande::~Operande() {
