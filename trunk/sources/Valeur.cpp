@@ -18,7 +18,7 @@ Valeur::Valeur(Type* t, int i){
     this->type= t;
     this->i= i;
 
-    cout<<endl <<" La valeur de la valeur  est : " << i<<endl;
+    /*cout<<endl <<" La valeur de la valeur  est : " << i<<endl;*/
 }
 Valeur::Valeur(Type* t, float f){
     this->type= t;

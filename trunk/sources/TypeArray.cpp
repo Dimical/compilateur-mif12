@@ -18,7 +18,7 @@ TypeArray::TypeArray() {
 
 TypeArray::TypeArray(Type* _ty, vector <TypeInterval*> _listInterval) {
     typeArray = _ty;
-    cout << "icicicicici" << &_listInterval <<endl;
+ 
     vector<TypeInterval*> *temp = new vector<TypeInterval*>(_listInterval);
     //vector <TypeInterval*> temp (_listInterval);
     listInterval = temp;
@@ -33,7 +33,7 @@ TypeArray::~TypeArray() {
 std::string TypeArray::getClass() {
     string retour = "";
 
-    cout << "après" << listInterval->size() << endl;
+
     for (unsigned int i=0;i<listInterval->size(); i++){
         retour += ",";
         retour += listInterval->at(i)->getClass();
